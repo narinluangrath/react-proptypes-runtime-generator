@@ -10,11 +10,13 @@ import { PropType, Shape } from "./types";
 type Statistics = {
   numInstances: number;
   componentNames: Set<string>;
+  propNames: Set<string>;
 };
 
 const initStats = () => ({
   numInstances: 0,
   componentNames: new Set<string>(),
+  propNames: new Set<string>(),
 });
 
 // @ts-expect-error
@@ -26,7 +28,7 @@ export const PropTypesRuntimeGenerator = ({ children }) => {
       const objDatabase = new ObjectDatabase<Shape>();
       ReactFiberRecur(children._owner, (node) => {
         const props = omit(node.memoizedProps ?? {}, children);
-        Object.entries(props).forEach(([, propValue]) => {
+        Object.entries(props).forEach(([propName, propValue]) => {
           const propType = getPropType(propValue, objDatabase);
 
           if (!stats.get(propType)) {
@@ -35,6 +37,7 @@ export const PropTypesRuntimeGenerator = ({ children }) => {
 
           stats.get(propType)!.numInstances += 1;
           stats.get(propType)!.componentNames.add(getNameFromFiber(node));
+          stats.get(propType)!.componentNames.add(propName);
         });
       });
 
