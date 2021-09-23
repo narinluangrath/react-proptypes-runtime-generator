@@ -38,7 +38,7 @@ export class ObjectDatabase<T extends object> {
     if (!this._objStore.get(numKeys)) {
       this._objStore.set(numKeys, []);
     }
-    this._objStore.get(numKeys).push(obj);
+    this._objStore.get(numKeys)!.push(obj);
 
     const typeName = `${this._typePrefix}${this._objCount}`;
     this._objTypeMap.set(obj, typeName);
@@ -56,7 +56,7 @@ export class ObjectDatabase<T extends object> {
     const objectMatch = this._objStore.get(numKeys)?.find(storedObj => storedObj === obj || isEqual(storedObj, obj));
 
     if (objectMatch) {
-      return this._objTypeMap.get(objectMatch);
+      return this._objTypeMap.get(objectMatch) ?? null;
     }
 
     return null;

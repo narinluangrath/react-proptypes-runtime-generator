@@ -1,8 +1,8 @@
 {
-  "name": "<package-name>",
+  "name": "react-proptypes-runtime-generator",
   "version": "0.0.0",
   "private": false,
-  "description": "<description>",
+  "description": "Generate proptypes using data at runtime",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -16,15 +16,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/narinluangrath/<package-name>.git"
+    "url": "git+https://github.com/narinluangrath/react-proptypes-runtime-generator.git"
   },
   "keywords": [],
   "author": "Narin Luangrath <narin.luangrath@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/narinluangrath/<package-name>/issues"
+    "url": "https://github.com/narinluangrath/react-proptypes-runtime-generator/issues"
   },
-  "homepage": "https://github.com/narinluangrath/<package-name>#readme",
+  "homepage": "https://github.com/narinluangrath/react-proptypes-runtime-generator#readme",
   "devDependencies": {
     "@babel/preset-env": "^7.15.6",
     "@babel/preset-react": "^7.14.5",
