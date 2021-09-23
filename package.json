@@ -31,6 +31,7 @@
     "@babel/preset-typescript": "^7.15.0",
     "@testing-library/react": "^12.1.0",
     "@types/jest": "^26.0.22",
+    "@types/lodash": "^4.14.173",
     "@types/react": "^17.0.3",
     "@types/react-dom": "^17.0.9",
     "@typescript-eslint/eslint-plugin": "^4.21.0",
@@ -65,5 +66,8 @@
       "prettier --write"
     ],
     "src/**/*.{scss,css,md}": "prettier --write"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21"
   }
 }
