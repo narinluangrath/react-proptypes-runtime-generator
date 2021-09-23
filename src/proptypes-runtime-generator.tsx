@@ -1,5 +1,5 @@
 import * as React from "react";
-import { omit } from "lodash";
+import { omit, sortBy } from "lodash";
 
 import { getNameFromFiber } from "./get-name-from-fiber";
 import { ReactFiberRecur } from "./react-fiber-recur";
@@ -41,8 +41,11 @@ export const PropTypesRuntimeGenerator = ({ children }) => {
         });
       });
 
-      console.log(objDatabase);
-      console.log(stats);
+      console.log(objDatabase.reverseMap);
+      const arr: Statistics[] = [];
+      // @ts-expect-error
+      stats.forEach(([pt, stat]) => arr.push({ propType: pt, ...stat }));
+      console.log(sortBy(arr, "numInstances"));
     };
   }, [children]);
 
