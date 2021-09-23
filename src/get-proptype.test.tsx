@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { cloneDeep } from "lodash";
 
 import { getPropType } from "./get-proptype";
@@ -46,7 +46,7 @@ describe("getPropType", () => {
     const type2 = getPropType(cloneDeep(obj), objectDatabase);
     expect(type2).toBe(type1);
     expect(type1).toMatchInlineSnapshot(`"Type2"`);
-    expect(objectDatabase._objTypeMap.reverseMap).toMatchInlineSnapshot(`
+    expect(objectDatabase.reverseMap).toMatchInlineSnapshot(`
       Map {
         "Type0" => Object {
           "baz": "PropTypes.string",
@@ -62,8 +62,10 @@ describe("getPropType", () => {
   });
 
   it("handles JSX", () => {
-    function MyApp() { return <div /> };
-    expect(getPropType(<div />)).toBe('PropTypes.node');
-    expect(getPropType(<MyApp />)).toBe('PropTypes.node');
-  })
+    function MyApp() {
+      return <div />;
+    }
+    expect(getPropType(<div />)).toBe("PropTypes.node");
+    expect(getPropType(<MyApp />)).toBe("PropTypes.node");
+  });
 });

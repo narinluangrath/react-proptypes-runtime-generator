@@ -37,7 +37,7 @@ export const PropTypesRuntimeGenerator = ({ children }) => {
 
           stats.get(propType)!.numInstances += 1;
           stats.get(propType)!.componentNames.add(getNameFromFiber(node));
-          stats.get(propType)!.componentNames.add(propName);
+          stats.get(propType)!.propNames.add(propName);
         });
       });
 

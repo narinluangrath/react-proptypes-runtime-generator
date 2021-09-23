@@ -1,11 +1,11 @@
-import { isEqual } from 'lodash';
+import { isEqual } from "lodash";
 
-import type { PropType } from './types';
+import type { PropType } from "./types";
 
 class TwoWayMap<T, K> {
   map = new Map<T, K>();
   reverseMap = new Map<K, T>();
-  
+
   get(key: T) {
     return this.map.get(key);
   }
@@ -24,14 +24,22 @@ class TwoWayMap<T, K> {
 export class ObjectDatabase<T extends object> {
   /**
    * _objStore.get(0) // List of objects with zero keys
-   * _objStore.get(1) // List of objects with one key 
+   * _objStore.get(1) // List of objects with one key
    * _objStore.get(2) // List of objects with two keys
    *                  // ...etc
    */
   _objStore: TwoWayMap<number, T[]> = new TwoWayMap();
   _objTypeMap: TwoWayMap<T, PropType> = new TwoWayMap();
   _objCount: number = 0;
-  _typePrefix: string = 'Type';
+  _typePrefix: string = "Type";
+
+  get map() {
+    return this._objTypeMap.map;
+  }
+
+  get reverseMap() {
+    return this._objTypeMap.reverseMap;
+  }
 
   storeObject(obj: T): string {
     const numKeys = Object.keys(obj).length;
@@ -42,7 +50,7 @@ export class ObjectDatabase<T extends object> {
 
     const typeName = `${this._typePrefix}${this._objCount}`;
     this._objTypeMap.set(obj, typeName);
-    
+
     this._objCount += 1;
 
     return typeName;
@@ -51,9 +59,11 @@ export class ObjectDatabase<T extends object> {
   // isObjectStored(obj) returns true if
   // an object with the same keys/values
   // exists in this._store
-  isObjectStored(obj: T): PropType | null  {
+  isObjectStored(obj: T): PropType | null {
     const numKeys = Object.keys(obj).length;
-    const objectMatch = this._objStore.get(numKeys)?.find(storedObj => storedObj === obj || isEqual(storedObj, obj));
+    const objectMatch = this._objStore
+      .get(numKeys)
+      ?.find((storedObj) => storedObj === obj || isEqual(storedObj, obj));
 
     if (objectMatch) {
       return this._objTypeMap.get(objectMatch) ?? null;
