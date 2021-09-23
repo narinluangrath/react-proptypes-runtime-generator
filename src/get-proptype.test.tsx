@@ -1,3 +1,4 @@
+import React from 'react';
 import { cloneDeep } from "lodash";
 
 import { getPropType } from "./get-proptype";
@@ -59,4 +60,10 @@ describe("getPropType", () => {
       }
     `);
   });
+
+  it("handles JSX", () => {
+    function MyApp() { return <div /> };
+    expect(getPropType(<div />)).toBe('PropTypes.node');
+    expect(getPropType(<MyApp />)).toBe('PropTypes.node');
+  })
 });

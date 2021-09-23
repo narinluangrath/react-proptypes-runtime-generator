@@ -38,6 +38,10 @@ export function getPropType(x: any, objectDatabase = new ObjectDatabase<Shape>()
     return (isNonEmpty && isHomogeneous) ? `PropTypes.arrayOf(${headPropType})` : `PropTypes.array`
   }
 
+  if (x?.$$typeof) {
+    return 'PropTypes.node';
+  }
+
   if (isPlainObject(x)) {
     const shape: Shape = Object.entries(x).reduce((acc, [key, value]) => ({
       ...acc,
