@@ -4,12 +4,13 @@ export type Shape = { [key: string]: PropType };
 
 type ComponentId = {
   componentName: string;
-  fileName: string;
+  fileName?: string;
 };
 
 type PropsInstance = { [propName: PropName]: any };
 
-export type FiberNodeData = ComponentId & {
+export type FiberNodeData = {
+  componentId: ComponentId;
   propsInstance: PropsInstance;
   isDOM: boolean;
 };
