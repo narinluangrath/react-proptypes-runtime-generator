@@ -1,6 +1,23 @@
+// String representations for type definitions
+// Specifically, these strings are one of the following:
+// 'PropTypes.number'
+// 'PropTypes.string'
+// 'PropTypes.bool'
+// 'PropTypes.symbol'
+// 'PropTypes.func'
+// 'PropTypes.oneOf([undefined])'
+// 'PropTypes.oneOf([null])'
+// 'PropTypes.arrayOf(<PropType>)'
+// 'PropTypes.array'
+// 'PropTypes.instanceOf(<Constructor>)'
+// 'PropTypes.any'
+// 'ObjectType0'
+// 'ObjectType1'
+// 'ObjectType2'
+// ...etc
 export type PropType = string;
 export type PropName = string;
-export type Shape = { [key: string]: PropType };
+export type ObjectTypeShape = { [propName: PropName]: PropType };
 
 type ComponentId = {
   componentName: string;

@@ -3,7 +3,7 @@ import { cloneDeep } from "lodash";
 
 import { getPropType } from "./get-proptype";
 import { ObjectDatabase } from "./object-database";
-import { Shape } from "./types";
+import { ObjectTypeShape } from "./types";
 
 describe("getPropType", () => {
   it("handles primitive arguments", () => {
@@ -34,7 +34,7 @@ describe("getPropType", () => {
   });
 
   it("handles deeply nested objects without creating duplicate types", () => {
-    const objectDatabase = new ObjectDatabase<Shape>();
+    const objectDatabase = new ObjectDatabase<ObjectTypeShape>("ObjectType");
     const obj = {
       foo: {
         bar: {
@@ -45,17 +45,17 @@ describe("getPropType", () => {
     const type1 = getPropType(obj, objectDatabase);
     const type2 = getPropType(cloneDeep(obj), objectDatabase);
     expect(type2).toBe(type1);
-    expect(type1).toMatchInlineSnapshot(`"Type2"`);
-    expect(objectDatabase.reverseMap).toMatchInlineSnapshot(`
+    expect(type1).toMatchInlineSnapshot(`"ObjectType2"`);
+    expect(objectDatabase.getIdToObjectMap()).toMatchInlineSnapshot(`
       Map {
-        "Type0" => Object {
+        "ObjectType0" => Object {
           "baz": "PropTypes.string",
         },
-        "Type1" => Object {
-          "bar": "Type0",
+        "ObjectType1" => Object {
+          "bar": "ObjectType0",
         },
-        "Type2" => Object {
-          "foo": "Type1",
+        "ObjectType2" => Object {
+          "foo": "ObjectType1",
         },
       }
     `);

@@ -28,16 +28,20 @@ export class ObjectDatabase<T extends object> {
    * _objStore.get(2) // List of objects with two keys
    *                  // ...etc
    */
-  _objStore: TwoWayMap<number, T[]> = new TwoWayMap();
-  _objTypeMap: TwoWayMap<T, PropType> = new TwoWayMap();
-  _objCount: number = 0;
-  _typePrefix: string = "Type";
+  private _objStore: TwoWayMap<number, T[]> = new TwoWayMap();
+  private _objTypeMap: TwoWayMap<T, PropType> = new TwoWayMap();
+  private _objCount: number = 0;
+  private _idPrefix: string = "ObjectType";
 
-  get map() {
+  constructor(idPrefix = "ObjectType") {
+    this._idPrefix = idPrefix;
+  }
+
+  getObjectToIdMap() {
     return this._objTypeMap.map;
   }
 
-  get reverseMap() {
+  getIdToObjectMap() {
     return this._objTypeMap.reverseMap;
   }
 
@@ -48,7 +52,7 @@ export class ObjectDatabase<T extends object> {
     }
     this._objStore.get(numKeys)!.push(obj);
 
-    const typeName = `${this._typePrefix}${this._objCount}`;
+    const typeName = `${this._idPrefix}${this._objCount}`;
     this._objTypeMap.set(obj, typeName);
 
     this._objCount += 1;

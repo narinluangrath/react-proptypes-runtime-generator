@@ -5,7 +5,7 @@ import { omit, sortBy, defaults } from "lodash";
 import { ReactFiberRecur } from "./react-fiber-recur";
 import { ObjectDatabase } from "./object-database";
 import { getPropType } from "./get-proptype";
-import { PropType, Shape } from "./types";
+import { PropType, ObjectTypeShape } from "./types";
 
 type Statistics = {
   numInstances: number;
@@ -25,7 +25,7 @@ export const PropTypesRuntimeGenerator = ({ children }) => {
     // @ts-expect-error
     window.ZOOMZOOM = () => {
       const stats = new Map<PropType, Statistics>();
-      const objDatabase = new ObjectDatabase<Shape>();
+      const objDatabase = new ObjectDatabase<ObjectTypeShape>();
       ReactFiberRecur(children._owner, (node) => {
         const props = omit(
           defaults(node.memoizedProps, node.pendingProps, {}),
@@ -45,7 +45,7 @@ export const PropTypesRuntimeGenerator = ({ children }) => {
         });
       });
 
-      console.log(objDatabase.reverseMap);
+      console.log(objDatabase.getIdToObjectMap());
       const arr: Statistics[] = [];
       // @ts-expect-error
       stats.forEach(([pt, stat]) => arr.push({ propType: pt, ...stat }));
