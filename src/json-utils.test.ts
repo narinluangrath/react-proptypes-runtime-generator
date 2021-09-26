@@ -16,20 +16,43 @@ describe("json-utils", () => {
 
   describe("stringify", () => {
     it("handles plain objects the same as JSON.stringify", () => {
-      expect(stringify(obj)).toBe(JSON.stringify(obj));
-      expect(stringify({})).toBe(JSON.stringify({}));
+      expect(stringify(obj)).toBe(JSON.stringify(obj, null, 2));
+      expect(stringify({})).toBe(JSON.stringify({}, null, 2));
     });
 
     it("handles Maps", () => {
-      expect(stringify(map)).toMatchInlineSnapshot(
-        `"{\\"dataType\\":\\"Map\\",\\"value\\":[[\\"a\\",1],[\\"b\\",2],[\\"c\\",3]]}"`
-      );
+      expect(stringify(map)).toMatchInlineSnapshot(`
+        "{
+          \\"dataType\\": \\"Map\\",
+          \\"value\\": [
+            [
+              \\"a\\",
+              1
+            ],
+            [
+              \\"b\\",
+              2
+            ],
+            [
+              \\"c\\",
+              3
+            ]
+          ]
+        }"
+      `);
     });
 
     it("handles Sets", () => {
-      expect(stringify(set)).toMatchInlineSnapshot(
-        `"{\\"dataType\\":\\"Set\\",\\"value\\":[\\"a\\",\\"b\\",\\"c\\"]}"`
-      );
+      expect(stringify(set)).toMatchInlineSnapshot(`
+        "{
+          \\"dataType\\": \\"Set\\",
+          \\"value\\": [
+            \\"a\\",
+            \\"b\\",
+            \\"c\\"
+          ]
+        }"
+      `);
     });
   });
 

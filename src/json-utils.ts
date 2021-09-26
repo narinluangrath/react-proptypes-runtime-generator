@@ -29,7 +29,7 @@ function reviver(_, value) {
 }
 
 export function stringify(data: any) {
-  return JSON.stringify(data, replacer);
+  return JSON.stringify(data, replacer, 2);
 }
 
 export function parse(str: string) {
