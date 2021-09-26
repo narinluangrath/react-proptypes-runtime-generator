@@ -29,10 +29,7 @@ const getFiberNodeName = (node: Fiber): string => {
 };
 
 export const getFiberNodeData = (node: Fiber): FiberNodeData => ({
-  componentId: {
-    componentName: getFiberNodeName(node),
-    fileName: node._debugSource?.fileName,
-  },
+  componentId: `${node._debugSource?.fileName ?? ""}:${getFiberNodeName(node)}`,
   propsInstance: omit(
     defaults(node.memoizedProps, node.pendingProps, {}),
     "children"

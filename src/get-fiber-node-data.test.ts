@@ -18,10 +18,7 @@ describe("getFiberNodeData", () => {
       },
     };
     expect(getFiberNodeData(functionElement as Fiber)).toEqual({
-      componentId: {
-        componentName: "FunctionComponent",
-        fileName: "path/to/file",
-      },
+      componentId: "path/to/file:FunctionComponent",
       propsInstance: { foo: "bar", baz: "biz" },
       isDOM: false,
     });
@@ -43,10 +40,7 @@ describe("getFiberNodeData", () => {
       },
     };
     expect(getFiberNodeData(classElement as Fiber)).toEqual({
-      componentId: {
-        componentName: "ClassComponent",
-        fileName: "path/to/file",
-      },
+      componentId: "path/to/file:FunctionComponent",
       propsInstance: { foo: "bar", baz: "biz" },
       isDOM: false,
     });
@@ -64,9 +58,7 @@ describe("getFiberNodeData", () => {
       },
     };
     expect(getFiberNodeData(domElement as Fiber)).toEqual({
-      componentId: {
-        componentName: "div",
-      },
+      componentId: ":div",
       propsInstance: {},
       isDOM: true,
     });
@@ -85,9 +77,7 @@ describe("getFiberNodeData", () => {
       },
     };
     expect(getFiberNodeData(contextProvider as Fiber)).toEqual({
-      componentId: {
-        componentName: "react.provider",
-      },
+      componentId: ":react.provider",
       propsInstance: { foo: "bar", baz: "biz" },
       isDOM: false,
     });

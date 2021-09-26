@@ -19,10 +19,9 @@ export type PropType = string;
 export type PropName = string;
 export type ObjectTypeShape = { [propName: PropName]: PropType };
 
-type ComponentId = {
-  componentName: string;
-  fileName?: string;
-};
+// fileName and componentName separated by a colon
+// e.g. path/to/file:MyComponent
+type ComponentId = string;
 
 type PropsInstance = { [propName: PropName]: any };
 
@@ -32,14 +31,16 @@ export type FiberNodeData = {
   isDOM: boolean;
 };
 
-export type ExportedPropTypeData = {
-  propType: PropType;
-  associatedpropNames: PropName[];
-  associatedComponentIds: ComponentId[];
-}[];
+export type PropTypeData = {
+  associatedPropNames: Set<PropName>;
+  associatedComponentIds: Set<ComponentId>;
+};
 
-export type ExportedComponentData = {
-  componentId: ComponentId;
-  propsTypes: { [propName: PropName]: PropType };
-  propsInstances: PropsInstance[];
-}[];
+export type ExportedPropTypeData = Map<PropType, PropTypeData>;
+
+export type ComponentData = {
+  propTypes: { [propName: PropName]: PropType };
+  propsInstances: Set<PropsInstance>;
+};
+
+export type ExportedComponentData = Map<ComponentId, ComponentData>;
