@@ -40,7 +40,7 @@ describe("getFiberNodeData", () => {
       },
     };
     expect(getFiberNodeData(classElement as Fiber)).toEqual({
-      componentId: "path/to/file:FunctionComponent",
+      componentId: "path/to/file:ClassComponent",
       propsInstance: { foo: "bar", baz: "biz" },
       isDOM: false,
     });
@@ -59,7 +59,9 @@ describe("getFiberNodeData", () => {
     };
     expect(getFiberNodeData(domElement as Fiber)).toEqual({
       componentId: ":div",
-      propsInstance: {},
+      propsInstance: {
+        children: "text",
+      },
       isDOM: true,
     });
   });

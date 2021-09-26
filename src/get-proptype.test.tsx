@@ -68,4 +68,14 @@ describe("getPropType", () => {
     expect(getPropType(<div />)).toBe("PropTypes.node");
     expect(getPropType(<MyApp />)).toBe("PropTypes.node");
   });
+
+  it("handles circular references", () => {
+    const circular = {
+      foo: "bar",
+    };
+    // @ts-expect-error
+    circular.self = circular;
+
+    expect(getPropType(circular)).toMatchInlineSnapshot(`"ObjectType0"`);
+  });
 });
