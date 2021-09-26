@@ -69,6 +69,7 @@
     "src/**/*.{scss,css,md}": "prettier --write"
   },
   "dependencies": {
+    "file-saver": "^2.0.5",
     "lodash": "^4.17.21"
   }
 }
