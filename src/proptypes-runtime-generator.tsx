@@ -1,5 +1,7 @@
 import * as React from "react";
+import { saveAs } from "file-saver";
 
+import { stringify } from "./json-utils";
 import { collectFiberNodeData } from "./collect-fiber-node-data";
 import { createExportedData } from "./create-exported-data";
 import type { FiberNodeData } from "./types";
@@ -22,8 +24,12 @@ export const PropTypesRuntimeGenerator: React.FC = ({ children }) => {
 
     // @ts-expect-error
     window.exportData = () => {
-      // @TODO: Finish it
-      createExportedData(data);
+      const exportedData = createExportedData(data);
+      const formattedData = stringify(exportedData);
+      const blob = new Blob([formattedData], {
+        type: "text/plain;charset=utf-8",
+      });
+      saveAs(blob, "data.json");
     };
   }, [children]);
 

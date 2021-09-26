@@ -1,6 +1,6 @@
 // Adapted from https://stackoverflow.com/a/56150320
 
-function replacer(_, value) {
+function replacer(_: string, value: any) {
   if (value instanceof Map) {
     return {
       dataType: "Map",
@@ -16,7 +16,7 @@ function replacer(_, value) {
   return value;
 }
 
-function reviver(_, value) {
+function reviver(_: string, value: any) {
   if (typeof value === "object" && value !== null) {
     if (value.dataType === "Map") {
       return new Map(value.value);
