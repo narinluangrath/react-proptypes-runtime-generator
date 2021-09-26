@@ -17,13 +17,13 @@
 // ...etc
 export type PropType = string;
 export type PropName = string;
-export type ObjectTypeShape = { [propName: PropName]: PropType };
+export type ObjectTypeShape = { [propName: string]: PropType };
 
 // fileName and componentName separated by a colon
 // e.g. path/to/file:MyComponent
 type ComponentId = string;
 
-type PropsInstance = { [propName: PropName]: any };
+type PropsInstance = { [propName: string]: any };
 
 export type FiberNodeData = {
   componentId: ComponentId;
@@ -39,7 +39,7 @@ export type PropTypeData = {
 export type ExportedPropTypeData = Map<PropType, PropTypeData>;
 
 export type ComponentData = {
-  propTypes: { [propName: PropName]: PropType };
+  propTypes: { [propName: string]: PropType };
   propsInstances: Set<PropsInstance>;
 };
 
