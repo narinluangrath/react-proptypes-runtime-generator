@@ -30,6 +30,10 @@
   "bugs": {
     "url": "https://github.com/narinluangrath/react-proptypes-runtime-generator/issues"
   },
+  "engines": {
+    "npm": "*",
+    "yarn": "(please use npm)"
+  },
   "homepage": "https://github.com/narinluangrath/react-proptypes-runtime-generator#readme",
   "files": [
     "package.json",
