@@ -1,6 +1,6 @@
 {
   "name": "react-proptypes-runtime-generator",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "private": false,
   "description": "Generate proptypes using data at runtime",
   "browser": "dist/index.js",
