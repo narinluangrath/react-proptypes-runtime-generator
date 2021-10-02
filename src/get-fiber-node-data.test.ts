@@ -50,18 +50,12 @@ describe("getFiberNodeData", () => {
     const domElement = {
       elementType: "div",
       type: "div",
-      memoizedProps: {
-        children: "text",
-      },
-      pendingProps: {
-        children: "text",
-      },
+      memoizedProps: {},
+      pendingProps: {},
     };
     expect(getFiberNodeData(domElement as Fiber)).toEqual({
       componentId: ":div",
-      propsInstance: {
-        children: "text",
-      },
+      propsInstance: {},
       isDOM: true,
     });
   });

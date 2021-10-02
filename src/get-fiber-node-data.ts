@@ -1,4 +1,4 @@
-import { defaults } from "lodash";
+import { defaults, omit } from "lodash";
 import type { Fiber } from "react-reconciler";
 import fclone from "fclone";
 
@@ -31,6 +31,8 @@ const getFiberNodeName = (node: Fiber): string => {
 
 export const getFiberNodeData = (node: Fiber): FiberNodeData => ({
   componentId: `${node._debugSource?.fileName ?? ""}:${getFiberNodeName(node)}`,
-  propsInstance: fclone(defaults(node.memoizedProps, node.pendingProps, {})),
+  propsInstance: fclone(
+    omit(defaults(node.memoizedProps, node.pendingProps, {}), "children")
+  ),
   isDOM: typeof node?.elementType === "string",
 });
