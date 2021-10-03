@@ -5,6 +5,7 @@ import fclone from "fclone";
 import type { FiberNodeData } from "./types";
 
 const getFiberNodeName = (node: Fiber): string => {
+  console.info(node);
   const defaultName = "(Unknown Name)";
 
   // Handle nodes cooresponding to Context, Memo, ForwardRef, etc.
