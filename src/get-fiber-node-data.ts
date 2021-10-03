@@ -5,7 +5,7 @@ import fclone from "fclone";
 import type { FiberNodeData } from "./types";
 
 const getFiberNodeName = (node: Fiber): string => {
-  console.info(node);
+  console.info("getFiberNodeName", node);
   const defaultName = "(Unknown Name)";
 
   // Handle nodes cooresponding to Context, Memo, ForwardRef, etc.
@@ -30,10 +30,14 @@ const getFiberNodeName = (node: Fiber): string => {
   return defaultName;
 };
 
-export const getFiberNodeData = (node: Fiber): FiberNodeData => ({
-  componentId: `${node._debugSource?.fileName ?? ""}:${getFiberNodeName(node)}`,
-  propsInstance: fclone(
-    omit(defaults(node.memoizedProps, node.pendingProps, {}), "children")
-  ),
-  isDOM: typeof node?.elementType === "string",
-});
+export const getFiberNodeData = (node: Fiber): FiberNodeData =>
+  // @ts-ignore
+  console.info("getFiberNodeName", node) || {
+    componentId: `${node._debugSource?.fileName ?? ""}:${getFiberNodeName(
+      node
+    )}`,
+    propsInstance: fclone(
+      omit(defaults(node.memoizedProps, node.pendingProps, {}), "children")
+    ),
+    isDOM: typeof node?.elementType === "string",
+  };

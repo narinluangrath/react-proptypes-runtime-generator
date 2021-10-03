@@ -23,10 +23,12 @@ const initPropTypeData = (): PropTypeData => ({
 const objDatabase = new ObjectDatabase<ObjectTypeShape>();
 
 export function createExportedData(data: FiberNodeData[]) {
+  console.info("createExportedData", data);
   const exportedComponentData: ExportedComponentData = new Map();
   const exportedPropTypeData: ExportedPropTypeData = new Map();
 
   data.forEach(({ propsInstance, componentId, isDOM }) => {
+    console.info("data.forEach", { propsInstance, componentId, isDOM });
     if (isDOM) {
       return;
     }
@@ -37,6 +39,7 @@ export function createExportedData(data: FiberNodeData[]) {
     exportedComponentData.get(componentId)!.propsInstances.add(propsInstance);
 
     Object.entries(propsInstance).forEach(([propName, propValue]) => {
+      console.info("Object.entries", [propName, propValue]);
       const propType: PropType = getPropType(propValue, objDatabase);
       // Some keys might get overwritten if different propsInstances
       // generate different propTypes. @TODO: Handle conflicts intelligently

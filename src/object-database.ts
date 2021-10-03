@@ -38,14 +38,17 @@ export class ObjectDatabase<T extends object> {
   }
 
   getObjectToIdMap() {
+    console.info("getObjectToIdMap");
     return this._objTypeMap.map;
   }
 
   getIdToObjectMap() {
+    console.info("getIdToObjectMap");
     return this._objTypeMap.reverseMap;
   }
 
   storeObject(obj: T): string {
+    console.info("storeObject", obj);
     const numKeys = Object.keys(obj).length;
     if (!this._objStore.get(numKeys)) {
       this._objStore.set(numKeys, []);
@@ -64,6 +67,7 @@ export class ObjectDatabase<T extends object> {
   // an object with the same keys/values
   // exists in this._store
   isObjectStored(obj: T): PropType | null {
+    console.info("isObjectStored", obj);
     const numKeys = Object.keys(obj).length;
     const objectMatch = this._objStore
       .get(numKeys)

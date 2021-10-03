@@ -29,9 +29,11 @@ function reviver(_: string, value: any) {
 }
 
 export function stringify(data: any) {
+  console.info("stringify", data);
   return JSON.stringify(data, replacer, 2);
 }
 
 export function parse(str: string) {
+  console.info("parse", str);
   return JSON.parse(str, reviver);
 }
