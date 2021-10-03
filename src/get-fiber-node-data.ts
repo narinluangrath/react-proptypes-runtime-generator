@@ -1,4 +1,4 @@
-import { defaults, omit } from "lodash";
+import { defaults, omit, isPlainObject } from "lodash";
 import type { Fiber } from "react-reconciler";
 import fclone from "fclone";
 
@@ -26,8 +26,23 @@ const getFiberNodeName = (node: Fiber): string => {
     return str;
   }
 
+  // Handle dom nodes corresponding to strings
+  // eslint-disable-next-line
+  if (node?.stateNode?.__proto__?.constructor?.name?.toLowerCase() === "text") {
+    return "Text";
+  }
+
   console.warn("Failed to determine node name", node);
   return defaultName;
+};
+
+const getFiberPropsInstance = (node: Fiber): object => {
+  if (!isPlainObject(node.memoizedProps || node.pendingProps)) {
+    return {};
+  }
+  const props = defaults(node.memoizedProps, node.pendingProps, {});
+  const propsWithoutChildren = omit(props, "children");
+  return fclone(propsWithoutChildren);
 };
 
 export const getFiberNodeData = (node: Fiber): FiberNodeData =>
@@ -36,8 +51,6 @@ export const getFiberNodeData = (node: Fiber): FiberNodeData =>
     componentId: `${node._debugSource?.fileName ?? ""}:${getFiberNodeName(
       node
     )}`,
-    propsInstance: fclone(
-      omit(defaults(node.memoizedProps, node.pendingProps, {}), "children")
-    ),
+    propsInstance: getFiberPropsInstance(node),
     isDOM: typeof node?.elementType === "string",
   };

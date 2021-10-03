@@ -78,4 +78,24 @@ describe("getFiberNodeData", () => {
       isDOM: false,
     });
   });
+
+  it("handles strings in the dom", () => {
+    const stringElement = {
+      elementType: null,
+      memoizedProps: "some text",
+      pendingProps: "some text",
+      stateNode: {
+        __proto__: {
+          constructor: {
+            name: "Text",
+          },
+        },
+      },
+    };
+    expect(getFiberNodeData(stringElement as Fiber)).toEqual({
+      componentId: ":Text",
+      propsInstance: {},
+      isDOM: false,
+    });
+  });
 });
