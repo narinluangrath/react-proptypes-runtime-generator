@@ -26,8 +26,9 @@ export const PropTypesRuntimeGenerator: React.FC = ({ children }) => {
       return;
     }
 
-    // @ts-expect-error
-    const rootNode: Fiber = root?._reactRootContainer?._internalRoot?.current;
+    const rootNode: Fiber =
+      // @ts-expect-error
+      root?._reactRootContainer?._internalRoot?.current?.child;
     const self = reactFiberRecur(
       rootNode,
       (node) => getFiberNodeName(node) === "PropTypesRuntimeGenerator"
