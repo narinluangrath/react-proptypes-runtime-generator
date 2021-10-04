@@ -26,8 +26,9 @@ export const PropTypesRuntimeGenerator: React.FC = ({ children }) => {
       return;
     }
 
-    // @ts-expect-error
-    const rootNode: Fiber = root?._reactRootContainer?._internalRoot?.current;
+    const rootNode: Fiber =
+      // @ts-expect-error
+      root?._reactRootContainer?._internalRoot?.current;
     const self = reactFiberRecur(
       rootNode,
       (node) => getFiberNodeName(node) === "PropTypesRuntimeGenerator"
@@ -36,14 +37,14 @@ export const PropTypesRuntimeGenerator: React.FC = ({ children }) => {
   }, []);
 
   React.useEffect(() => {
-    if (!selfNode) {
-      console.error("Failed to collect data");
-      return;
-    }
-
     // @ts-expect-error
     window.collectData = () => {
-      data.push(...collectFiberNodeData(selfNode));
+      if (!selfNode?.child) {
+        console.error("Failed to collect data");
+        return;
+      }
+
+      data.push(...collectFiberNodeData(selfNode?.child));
       console.log({ data });
     };
 
