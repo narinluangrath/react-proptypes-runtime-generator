@@ -1,8 +1,8 @@
 // https://github.com/rollup/rollup-starter-lib/blob/typescript/rollup.config.js
 
-import resolve from 'rollup-plugin-node-resolve';
-import commonjs from 'rollup-plugin-commonjs';
-import typescript from 'rollup-plugin-typescript';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
+import typescript from '@rollup/plugin-typescript';
 import autoExternal from 'rollup-plugin-auto-external';
 import { babel } from '@rollup/plugin-babel';
 import pkg from './package.json';
@@ -17,9 +17,9 @@ export default [
 			format: 'umd'
 		},
 		plugins: [
-			resolve(),   // so Rollup can find `ms`
-			commonjs(),  // so Rollup can convert `ms` to an ES module
-			typescript(), // so Rollup can convert TypeScript to JavaScript
+			nodeResolve(),   // so Rollup can find `ms`
+			commonjs(),      // so Rollup can convert `ms` to an ES module
+			typescript(),    // so Rollup can convert TypeScript to JavaScript
 			babel({ babelHelpers: 'bundled' }),
       autoExternal(),
 		]
