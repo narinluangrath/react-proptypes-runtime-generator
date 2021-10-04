@@ -29,9 +29,6 @@ export function createExportedData(data: FiberNodeData[]) {
 
   data.forEach(({ propsInstance, componentId, isDOM }) => {
     console.info("data.forEach", { propsInstance, componentId, isDOM });
-    if (isDOM) {
-      return;
-    }
 
     if (!exportedComponentData.get(componentId)) {
       exportedComponentData.set(componentId, initComponentData());

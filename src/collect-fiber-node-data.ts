@@ -8,7 +8,13 @@ export function collectFiberNodeData(root: Fiber): FiberNodeData[] {
   console.info("collectFiberNodeData", root);
   const data: FiberNodeData[] = [];
   reactFiberRecur(root, (node) => {
-    data.push(getFiberNodeData(node));
+    const datum = getFiberNodeData(node);
+    if (
+      datum.componentId.split(":").filter((s) => s !== "").length === 2 &&
+      !datum.isDOM
+    ) {
+      data.push(datum);
+    }
   });
   return data;
 }
