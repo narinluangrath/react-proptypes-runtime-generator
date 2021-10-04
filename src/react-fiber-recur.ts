@@ -1,14 +1,27 @@
 import { Fiber } from "react-reconciler";
 
-export function reactFiberRecur(rootNode: Fiber, cb: (node: Fiber) => void) {
+export function reactFiberRecur(
+  rootNode: Fiber,
+  cb: (node: Fiber) => boolean | null | undefined | void
+): Fiber | null {
   console.info("reactFiberRecur", rootNode);
-  cb(rootNode);
+  if (cb(rootNode)) {
+    return rootNode;
+  }
 
   if (rootNode.child) {
-    reactFiberRecur(rootNode.child, cb);
+    const res = reactFiberRecur(rootNode.child, cb);
+    if (res) {
+      return res;
+    }
   }
 
   if (rootNode.sibling) {
-    reactFiberRecur(rootNode.sibling, cb);
+    const res = reactFiberRecur(rootNode.sibling, cb);
+    if (res) {
+      return res;
+    }
   }
+
+  return null;
 }

@@ -4,7 +4,7 @@ import fclone from "fclone";
 
 import type { FiberNodeData } from "./types";
 
-const getFiberNodeName = (node: Fiber): string => {
+export const getFiberNodeName = (node: Fiber): string => {
   console.info("getFiberNodeName", node);
   const defaultName = "(Unknown Name)";
 
