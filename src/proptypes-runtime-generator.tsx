@@ -16,9 +16,9 @@ export const PropTypesRuntimeGenerator: React.FC = ({ children }) => {
   const [selfNode, setSelfNode] = React.useState<Fiber | null>(null);
 
   React.useEffect(() => {
-    // @ts-expect-error
     const root = traverseDomBfs(
       document.body,
+      // @ts-expect-error
       (node) => !!node?._reactRootContainer?._internalRoot?.current
     );
     if (!root) {
