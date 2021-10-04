@@ -37,13 +37,13 @@ export const PropTypesRuntimeGenerator: React.FC = ({ children }) => {
   }, []);
 
   React.useEffect(() => {
-    if (!selfNode) {
-      console.error("Failed to collect data");
-      return;
-    }
-
     // @ts-expect-error
     window.collectData = () => {
+      if (!selfNode) {
+        console.error("Failed to collect data");
+        return;
+      }
+
       data.push(...collectFiberNodeData(selfNode));
       console.log({ data });
     };
