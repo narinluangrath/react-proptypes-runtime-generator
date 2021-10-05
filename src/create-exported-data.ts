@@ -15,9 +15,10 @@ const initComponentData = (): ComponentData => ({
   propTypes: {},
 });
 
-const initPropTypeData = (): PropTypeData => ({
+const initPropTypeData = (objectTypeShape: ObjectTypeShape): PropTypeData => ({
   associatedComponentIds: new Set(),
   associatedPropNames: new Set(),
+  objectTypeShape,
 });
 
 const objDatabase = new ObjectDatabase<ObjectTypeShape>();
@@ -43,7 +44,10 @@ export function createExportedData(data: FiberNodeData[]) {
       exportedComponentData.get(componentId)!.propTypes[propName] = propType;
 
       if (!exportedPropTypeData.get(propType)) {
-        exportedPropTypeData.set(propType, initPropTypeData());
+        exportedPropTypeData.set(
+          propType,
+          initPropTypeData(objDatabase.getObject(propType)!)
+        );
       }
       exportedPropTypeData
         .get(propType)!

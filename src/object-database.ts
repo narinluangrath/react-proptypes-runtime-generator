@@ -47,6 +47,10 @@ export class ObjectDatabase<T extends object> {
     return this._objTypeMap.reverseMap;
   }
 
+  getObject(p: PropType) {
+    return this.getIdToObjectMap().get(p);
+  }
+
   storeObject(obj: T): string {
     console.info("storeObject", obj);
     const numKeys = Object.keys(obj).length;

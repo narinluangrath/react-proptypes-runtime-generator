@@ -34,6 +34,7 @@ export type FiberNodeData = {
 export type PropTypeData = {
   associatedPropNames: Set<PropName>;
   associatedComponentIds: Set<ComponentId>;
+  objectTypeShape: ObjectTypeShape;
 };
 
 export type ExportedPropTypeData = Map<PropType, PropTypeData>;
