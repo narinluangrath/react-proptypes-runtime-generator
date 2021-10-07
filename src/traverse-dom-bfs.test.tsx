@@ -32,9 +32,7 @@ describe("traverse-dom-bfs", () => {
     const ids: string[] = [];
     traverseDomBfs(document.body, (node) => {
       ids.push(node.id);
-      if (node.id === "2") {
-        return true;
-      }
+      return node.id === "2";
     });
 
     expect(ids).toEqual(["0", "1", "2"]);
