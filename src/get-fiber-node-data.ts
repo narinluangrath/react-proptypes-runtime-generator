@@ -7,25 +7,25 @@ import type { FiberNodeData } from "./types";
 export const getFiberNodeName = (node: Fiber): string => {
   console.info("getFiberNodeName", node);
   const defaultName = "(Unknown Name)";
-
+  console.log("1");
   // Handle nodes cooresponding to Context, Memo, ForwardRef, etc.
   const sym = node?.elementType?.$$typeof;
   if (typeof sym === "symbol") {
     return Symbol.keyFor(node?.elementType?.$$typeof) || defaultName;
   }
-
+  console.log("2");
   // Handle "normal" nodes (function/class component instances)
   let str = node?.elementType?.name;
   if (typeof str === "string") {
     return str;
   }
-
+  console.log("3");
   // Handle native dom nodes
   str = node?.elementType;
   if (typeof str === "string") {
     return str;
   }
-
+  console.log("4");
   // Handle dom nodes corresponding to strings
   // eslint-disable-next-line
   if (node?.stateNode?.__proto__?.constructor?.name?.toLowerCase() === "text") {
