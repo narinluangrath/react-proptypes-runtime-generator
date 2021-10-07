@@ -47,7 +47,7 @@ const getFiberPropsInstance = (node: Fiber): object => {
 
 export const getFiberNodeData = (node: Fiber): FiberNodeData =>
   // @ts-ignore
-  console.info("getFiberNodeData", node) || {
+  console.info("getFiberNodeData", getFiberNodeName(node), node) || {
     componentId: `${node._debugSource?.fileName ?? ""}:${getFiberNodeName(
       node
     )}`,
