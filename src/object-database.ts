@@ -2,21 +2,37 @@ import { isEqual } from "lodash";
 
 import type { PropType } from "./types";
 
-class TwoWayMap<T, K> {
-  map = new Map<T, K>();
-  reverseMap = new Map<K, T>();
+// A Bijection<T, K> is a one-to-one mapping Map<T, K>
+// All bijections are maps, but not all maps are bijections
+class Bijection<D, R> {
+  domain = new Set<D>();
+  range = new Set<R>();
+  map = new Map<D, R>();
+  inverseMap = new Map<R, D>();
 
-  get(key: T) {
-    return this.map.get(key);
+  get(x: D) {
+    return this.map.get(x);
   }
 
-  set(key: T, value: K) {
-    this.reverseMap.set(value, key);
-    return this.map.set(key, value);
+  inverseGet(y: R) {
+    return this.inverseMap.get(y);
   }
 
-  reverseGet(key: K) {
-    return this.reverseMap.get(key);
+  set(x: D, y: R) {
+    if (this.map.get(x) === y) {
+      return this.map;
+    }
+
+    if (this.range.has(y)) {
+      throw Error(
+        `Cannot set mapping ${x} -> ${y}, ${this.inverseMap.get(y)} -> y exists`
+      );
+    }
+
+    this.inverseMap.set(y, x);
+    this.domain.add(x);
+    this.range.add(y);
+    return this.map.set(x, y);
   }
 }
 
@@ -28,8 +44,8 @@ export class ObjectDatabase<T extends object> {
    * _objStore.get(2) // List of objects with two keys
    *                  // ...etc
    */
-  private _objStore: TwoWayMap<number, T[]> = new TwoWayMap();
-  private _objTypeMap: TwoWayMap<T, PropType> = new TwoWayMap();
+  private _objStore: Bijection<number, T[]> = new Bijection();
+  private _objTypeMap: Bijection<T, PropType> = new Bijection();
   private _objCount: number = 0;
   private _idPrefix: string = "ObjectType";
 
@@ -44,7 +60,7 @@ export class ObjectDatabase<T extends object> {
 
   getIdToObjectMap() {
     console.info("getIdToObjectMap");
-    return this._objTypeMap.reverseMap;
+    return this._objTypeMap.inverseMap;
   }
 
   getObject(p: PropType) {
