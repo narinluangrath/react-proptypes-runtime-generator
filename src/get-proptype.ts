@@ -1,12 +1,12 @@
 import { isPlainObject } from "lodash";
 import fclone from "fclone";
 
-import { ObjectDatabase } from "./object-database";
+import { ObjectStore } from "./object-store";
 import { PropType, ObjectTypeShape } from "./types";
 
 export function getPropType(
   x: any,
-  objectDatabase = new ObjectDatabase<ObjectTypeShape>()
+  objectStore = new ObjectStore<ObjectTypeShape>()
 ): PropType {
   console.info("getPropType", x);
   switch (typeof x) {
@@ -38,10 +38,9 @@ export function getPropType(
     const isHomogeneous = x.every(
       (el, i) =>
         i === 0 ||
-        getPropType(el, objectDatabase) ===
-          getPropType(x[i - 1], objectDatabase)
+        getPropType(el, objectStore) === getPropType(x[i - 1], objectStore)
     );
-    const headPropType = getPropType(x[0], objectDatabase);
+    const headPropType = getPropType(x[0], objectStore);
     return isNonEmpty && isHomogeneous
       ? `PropTypes.arrayOf(${headPropType})`
       : `PropTypes.array`;
@@ -56,13 +55,11 @@ export function getPropType(
     const shape: ObjectTypeShape = Object.entries(scrubed).reduce(
       (acc, [key, value]) => ({
         ...acc,
-        [key]: getPropType(value, objectDatabase),
+        [key]: getPropType(value, objectStore),
       }),
       {}
     );
-    return (
-      objectDatabase.isObjectStored(shape) || objectDatabase.storeObject(shape)
-    );
+    return objectStore.storeObject(shape);
   }
 
   // eslint-disable-next-line

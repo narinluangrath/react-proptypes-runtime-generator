@@ -8,7 +8,7 @@ import { traverseDomBfs } from "./traverse-dom-bfs";
 import { getFiberNodeName } from "./get-fiber-node-data";
 import { reactFiberRecur } from "./react-fiber-recur";
 import type { FiberNodeData } from "./types";
-import { Fiber } from "react-reconciler";
+import type { Fiber } from "react-reconciler";
 
 const data: FiberNodeData[] = [];
 

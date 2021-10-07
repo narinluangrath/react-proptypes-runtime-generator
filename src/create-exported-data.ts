@@ -1,4 +1,4 @@
-import { ObjectDatabase } from "./object-database";
+import { ObjectStore } from "./object-store";
 import { getPropType } from "./get-proptype";
 import type {
   FiberNodeData,
@@ -21,7 +21,7 @@ const initPropTypeData = (objectTypeShape: ObjectTypeShape): PropTypeData => ({
   objectTypeShape,
 });
 
-const objDatabase = new ObjectDatabase<ObjectTypeShape>();
+const objStore = new ObjectStore<ObjectTypeShape>();
 
 export function createExportedData(data: FiberNodeData[]) {
   console.info("createExportedData", data);
@@ -38,7 +38,7 @@ export function createExportedData(data: FiberNodeData[]) {
 
     Object.entries(propsInstance).forEach(([propName, propValue]) => {
       console.info("Object.entries", [propName, propValue]);
-      const propType: PropType = getPropType(propValue, objDatabase);
+      const propType: PropType = getPropType(propValue, objStore);
       // Some keys might get overwritten if different propsInstances
       // generate different propTypes. @TODO: Handle conflicts intelligently
       exportedComponentData.get(componentId)!.propTypes[propName] = propType;
@@ -46,7 +46,7 @@ export function createExportedData(data: FiberNodeData[]) {
       if (!exportedPropTypeData.get(propType)) {
         exportedPropTypeData.set(
           propType,
-          initPropTypeData(objDatabase.getObject(propType)!)
+          initPropTypeData(objStore.get(propType)!)
         );
       }
       exportedPropTypeData

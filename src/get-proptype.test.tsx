@@ -2,7 +2,7 @@ import React from "react";
 import { cloneDeep } from "lodash";
 
 import { getPropType } from "./get-proptype";
-import { ObjectDatabase } from "./object-database";
+import { ObjectStore } from "./object-store";
 import { ObjectTypeShape } from "./types";
 
 describe("getPropType", () => {
@@ -34,7 +34,7 @@ describe("getPropType", () => {
   });
 
   it("handles deeply nested objects without creating duplicate types", () => {
-    const objectDatabase = new ObjectDatabase<ObjectTypeShape>("ObjectType");
+    const objectStore = new ObjectStore<ObjectTypeShape>("ObjectType");
     const obj = {
       foo: {
         bar: {
@@ -42,22 +42,31 @@ describe("getPropType", () => {
         },
       },
     };
-    const type1 = getPropType(obj, objectDatabase);
-    const type2 = getPropType(cloneDeep(obj), objectDatabase);
+    const type1 = getPropType(obj, objectStore);
+    const type2 = getPropType(cloneDeep(obj), objectStore);
     expect(type2).toBe(type1);
     expect(type1).toMatchInlineSnapshot(`"ObjectType2"`);
-    expect(objectDatabase.getIdToObjectMap()).toMatchInlineSnapshot(`
-      Map {
-        "ObjectType0" => Object {
-          "baz": "PropTypes.string",
-        },
-        "ObjectType1" => Object {
-          "bar": "ObjectType0",
-        },
-        "ObjectType2" => Object {
-          "foo": "ObjectType1",
-        },
-      }
+    expect([...objectStore]).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          Object {
+            "baz": "PropTypes.string",
+          },
+          "ObjectType0",
+        ],
+        Array [
+          Object {
+            "bar": "ObjectType0",
+          },
+          "ObjectType1",
+        ],
+        Array [
+          Object {
+            "foo": "ObjectType1",
+          },
+          "ObjectType2",
+        ],
+      ]
     `);
   });
 
