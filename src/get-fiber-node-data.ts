@@ -1,7 +1,7 @@
-import { defaults, omit, isPlainObject } from "lodash";
 import type { Fiber } from "react-reconciler";
-import fclone from "fclone";
+import { defaults, omit, isPlainObject } from "lodash";
 
+import { scrubCircularReferences } from "./scrub-circular-references";
 import type { FiberNodeData } from "./types";
 
 export const getFiberNodeName = (node: Fiber): string => {
@@ -46,8 +46,8 @@ const getFiberPropsInstance = (node: Fiber): object => {
   const props = defaults(node.memoizedProps, node.pendingProps, {});
   console.log("beforePropsWithoutchild");
   const propsWithoutChildren = omit(props, "children");
-  console.log("before fclone");
-  return fclone(propsWithoutChildren);
+  console.log("before scrub");
+  return scrubCircularReferences(propsWithoutChildren);
 };
 
 export const getFiberNodeData = (node: Fiber): FiberNodeData =>
