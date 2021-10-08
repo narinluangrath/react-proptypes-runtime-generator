@@ -43,21 +43,16 @@ export const PropTypesRuntimeGenerator: React.FC = ({ children }) => {
         console.error("Failed to collect data");
         return;
       }
-
       data.push(...collectFiberNodeData(selfNode?.child));
-      console.log({ data });
     };
 
     // @ts-expect-error
     window.exportData = () => {
       const exportedData = createExportedData(data);
-      console.log({ exportedData });
       const formattedData = stringify(exportedData);
-      console.log({ formattedData });
       const blob = new Blob([formattedData], {
         type: "text/plain;charset=utf-8",
       });
-      console.log({ blob });
       saveAs(blob, "data.json");
     };
   }, [selfNode]);

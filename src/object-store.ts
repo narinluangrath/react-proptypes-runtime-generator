@@ -69,8 +69,6 @@ export class ObjectStore<T extends object> {
   // Store object and return an id
   // ObjectStore.get(ObjectStore.storeObject(obj)) === obj
   storeObject(obj: T): string {
-    console.info("storeObject", obj);
-
     const maybeObjectId = this._isObjectStored(obj);
     if (maybeObjectId) {
       return maybeObjectId;
@@ -93,7 +91,6 @@ export class ObjectStore<T extends object> {
 
   // Check if `obj` is already stored using shallow equality
   private _isObjectStored(obj: T): string | null {
-    console.info("isObjectStored", obj);
     const numKeys = Object.keys(obj).length;
     const objectMatch = this._objSubStore
       .get(numKeys)

@@ -5,7 +5,6 @@ import { getFiberNodeData } from "./get-fiber-node-data";
 import type { FiberNodeData } from "./types";
 
 export function collectFiberNodeData(root: Fiber): FiberNodeData[] {
-  console.info("collectFiberNodeData", root);
   const data: FiberNodeData[] = [];
   reactFiberRecur(root, (node) => {
     const datum = getFiberNodeData(node);

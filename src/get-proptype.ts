@@ -8,7 +8,6 @@ export function getPropType(
   x: any,
   objectStore = new ObjectStore<ObjectTypeShape>()
 ): PropType {
-  console.info("getPropType", x);
   switch (typeof x) {
     case "number":
     case "bigint":

@@ -4,7 +4,6 @@ export function reactFiberRecur(
   rootNode: Fiber,
   cb: (node: Fiber) => boolean | null | undefined | void
 ): Fiber | null {
-  console.info("reactFiberRecur", rootNode);
   if (cb(rootNode)) {
     return rootNode;
   }
