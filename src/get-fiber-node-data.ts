@@ -1,7 +1,6 @@
 import type { Fiber } from "react-reconciler";
 import { defaults, omit, isPlainObject } from "lodash";
 
-import { scrubCircularReferences } from "./scrub-circular-references";
 import type { FiberNodeData } from "./types";
 
 export const getFiberNodeName = (node: Fiber): string => {
@@ -45,9 +44,7 @@ const getFiberPropsInstance = (node: Fiber): object => {
   console.log("before defaults");
   const props = defaults(node.memoizedProps, node.pendingProps, {});
   console.log("beforePropsWithoutchild");
-  const propsWithoutChildren = omit(props, "children");
-  console.log("before scrub");
-  return scrubCircularReferences(propsWithoutChildren);
+  return omit(props, "children");
 };
 
 export const getFiberNodeData = (node: Fiber): FiberNodeData =>
@@ -59,3 +56,9 @@ export const getFiberNodeData = (node: Fiber): FiberNodeData =>
     propsInstance: getFiberPropsInstance(node),
     isDOM: typeof node?.elementType === "string",
   };
+
+// ._debugSource
+// .elementtype
+// .memoizedProps
+// .pendingProps
+// .stateNode

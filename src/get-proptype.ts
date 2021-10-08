@@ -1,6 +1,5 @@
 import { isPlainObject } from "lodash";
 
-import { scrubCircularReferences } from "./scrub-circular-references";
 import { ObjectStore } from "./object-store";
 import { PropType, ObjectTypeShape } from "./types";
 
@@ -51,8 +50,7 @@ export function getPropType(
   }
 
   if (isPlainObject(x)) {
-    const scrubed = scrubCircularReferences(x);
-    const shape: ObjectTypeShape = Object.entries(scrubed).reduce(
+    const shape: ObjectTypeShape = Object.entries(x).reduce(
       (acc, [key, value]) => ({
         ...acc,
         [key]: getPropType(value, objectStore),
