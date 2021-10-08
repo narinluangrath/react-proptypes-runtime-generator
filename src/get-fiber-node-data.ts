@@ -37,11 +37,16 @@ export const getFiberNodeName = (node: Fiber): string => {
 };
 
 const getFiberPropsInstance = (node: Fiber): object => {
+  console.log("getfiberPropsInstance");
   if (!isPlainObject(node.memoizedProps || node.pendingProps)) {
+    console.log("isPlainobject");
     return {};
   }
+  console.log("before defaults");
   const props = defaults(node.memoizedProps, node.pendingProps, {});
+  console.log("beforePropsWithoutchild");
   const propsWithoutChildren = omit(props, "children");
+  console.log("before fclone");
   return fclone(propsWithoutChildren);
 };
 
