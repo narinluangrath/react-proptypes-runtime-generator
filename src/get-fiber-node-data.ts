@@ -1,5 +1,5 @@
-import type { Fiber } from "react-reconciler";
 import { defaults, omit, isPlainObject } from "lodash";
+import type { Fiber } from "react-reconciler";
 
 import type { FiberNodeData } from "./types";
 

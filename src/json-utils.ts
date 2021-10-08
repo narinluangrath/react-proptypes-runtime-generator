@@ -1,3 +1,5 @@
+const safeStringify = require("json-stringify-safe");
+
 // Adapted from https://stackoverflow.com/a/56150320
 
 function replacer(_: string, value: any) {
@@ -30,7 +32,7 @@ function reviver(_: string, value: any) {
 
 export function stringify(data: any) {
   console.info("stringify", data);
-  return JSON.stringify(data, replacer, 2);
+  return safeStringify(data, replacer, 2);
 }
 
 export function parse(str: string) {

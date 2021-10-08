@@ -54,6 +54,19 @@ describe("json-utils", () => {
         }"
       `);
     });
+
+    it("handles circular references", () => {
+      const foo = { bar: "baz" };
+      // @ts-expect-error
+      foo.fizz = foo;
+
+      expect(stringify(foo)).toMatchInlineSnapshot(`
+        "{
+          \\"bar\\": \\"baz\\",
+          \\"fizz\\": \\"[Circular ~]\\"
+        }"
+      `);
+    });
   });
 
   describe("parse", () => {
