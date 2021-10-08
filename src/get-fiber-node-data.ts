@@ -15,15 +15,15 @@ export const getFiberNodeName = (node: Fiber): string => {
   }
   console.log("2");
   // Handle "normal" nodes (function/class component instances)
-  let str = node?.elementType?.name;
-  if (typeof str === "string") {
-    return str;
+  const componentName = node?.elementType?.name;
+  if (typeof componentName === "string") {
+    return componentName;
   }
   console.log("3");
   // Handle native dom nodes
-  str = node?.elementType;
-  if (typeof str === "string") {
-    return str;
+  const domNodeName = node?.elementType;
+  if (typeof domNodeName === "string") {
+    return domNodeName;
   }
   console.log("4");
   // Handle dom nodes corresponding to strings
