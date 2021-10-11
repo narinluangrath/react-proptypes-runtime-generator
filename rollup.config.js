@@ -42,5 +42,17 @@ export default [
 			{ file: pkg.main, format: 'cjs' },
 			{ file: pkg.module, format: 'es' }
 		]
+	},
+
+	// Server
+	{
+		input: 'src/server.ts',
+		plugins: [
+			typescript(), // so Rollup can convert TypeScript to JavaScript
+			babel({ babelHelpers: 'bundled' }),
+		],
+		output: [
+			{ file: pkg.bin['rprg-server'], format: 'cjs', banner: '#!/usr/bin/env node' },
+		],
 	}
 ];

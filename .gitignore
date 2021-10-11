@@ -1,2 +1,5 @@
+# Keep in sync with .prettierignore
+
 node_modules
 dist
+bin
