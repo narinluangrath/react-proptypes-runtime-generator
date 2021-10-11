@@ -7,6 +7,7 @@ import { babel } from '@rollup/plugin-babel';
 import pkg from './package.json';
 
 export default [
+	// React component
 	{
 		input: 'src/index.ts',
 		plugins: [
@@ -20,5 +21,17 @@ export default [
 			{ file: pkg.module, format: 'es' }
 		],
 		external: ['react'],
+	},
+
+	// Server
+	{
+		input: 'src/server.ts',
+		plugins: [
+			typescript(), // so Rollup can convert TypeScript to JavaScript
+			babel({ babelHelpers: 'bundled' }),
+		],
+		output: [
+			{ file: pkg.bin['rprg-server'], format: 'cjs', banner: '#!/usr/bin/env node' },
+		],
 	}
 ];

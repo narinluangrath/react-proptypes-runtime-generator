@@ -7,8 +7,11 @@
   "module": "dist/index.esm.js",
   "browser": "dist/index.esm.js",
   "types": "dist/index.d.ts",
+  "bin": {
+    "rprg-server": "bin/rprg-server.js"
+  },
   "scripts": {
-    "build": "rm -rf dist/* && rollup -c",
+    "build": "rm -rf dist/* bin/* && rollup -c",
     "dev": "npm run build -- -w",
     "deploy:patch": "npm run build && npm version patch && npm publish --access public",
     "deploy:minor": "npm run build && npm version minor && npm publish --access public",
@@ -49,6 +52,7 @@
     "@rollup/plugin-node-resolve": "^13.0.5",
     "@rollup/plugin-typescript": "^8.2.5",
     "@testing-library/react": "^12.1.0",
+    "@types/express": "^4.17.13",
     "@types/file-saver": "^2.0.3",
     "@types/jest": "^26.0.22",
     "@types/lodash": "^4.14.173",
@@ -93,6 +97,7 @@
     "src/**/*.{scss,css,md}": "prettier --write"
   },
   "dependencies": {
+    "express": "^4.17.1",
     "file-saver": "^2.0.5",
     "json-stringify-safe": "^5.0.1",
     "lodash": "^4.17.21"
