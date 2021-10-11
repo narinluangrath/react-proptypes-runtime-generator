@@ -11,7 +11,7 @@
     "rprg-server": "bin/rprg-server.js"
   },
   "scripts": {
-    "build": "rm -rf dist/* bin/* && rollup -c",
+    "build": "rm -rf dist/* bin/* node_modules/react && rollup -c",
     "dev": "npm run build -- -w",
     "deploy:patch": "npm run build && npm version patch && npm publish --access public",
     "deploy:minor": "npm run build && npm version minor && npm publish --access public",
@@ -97,6 +97,7 @@
     "src/**/*.{scss,css,md}": "prettier --write"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "file-saver": "^2.0.5",
     "json-stringify-safe": "^5.0.1",

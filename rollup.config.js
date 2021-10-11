@@ -27,7 +27,9 @@ export default [
 	{
 		input: 'src/server.ts',
 		plugins: [
-			typescript(), // so Rollup can convert TypeScript to JavaScript
+			nodeResolve(),   // so Rollup can find node modules
+			commonjs(),      // so Rollup can convert node modules to an ES modules
+			typescript(),    // so Rollup can convert TypeScript to JavaScript
 			babel({ babelHelpers: 'bundled' }),
 		],
 		output: [
