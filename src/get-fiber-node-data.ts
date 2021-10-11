@@ -35,10 +35,20 @@ export const getFiberNodeName = (node: Fiber): string => {
 };
 
 const getFiberPropsInstance = (node: Fiber): object => {
+  console.log("getFiberPropsInstance");
+  console.log(node.memoizedProps, node.pendingProps);
   if (!isPlainObject(node.memoizedProps || node.pendingProps)) {
     return {};
   }
-  const props = defaults(node.memoizedProps, node.pendingProps, {});
+
+  // Sometimes _.defaults doesn't handle "read only" properties
+  // It will attempt to assign to "read only" properties and
+  // cause a TypeError to be thrown
+  let props = node.memoizedProps ?? node.pendingProps ?? {};
+  try {
+    props = defaults(node.memoizedProps, node.pendingProps, {});
+  } catch (e) {}
+
   return omit(props, "children");
 };
 
