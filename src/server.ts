@@ -11,9 +11,7 @@ app.use(express.json());
 // @ts-expect-error
 app.post("/", (req, res) => {
   const data = req.body ?? "";
-  console.log({ data });
   const stringified = JSON.stringify(data);
-  console.log({ stringified });
   const sanitized = stringified.replace(/\n/g, "");
   fs.appendFile("data.json", sanitized + "\n", console.error);
   res.send("ok");

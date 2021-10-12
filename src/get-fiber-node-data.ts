@@ -35,8 +35,6 @@ export const getFiberNodeName = (node: Fiber): string => {
 };
 
 const getFiberPropsInstance = (node: Fiber): object => {
-  console.log("getFiberPropsInstance");
-  console.log(node.memoizedProps, node.pendingProps);
   if (!isPlainObject(node.memoizedProps || node.pendingProps)) {
     return {};
   }
