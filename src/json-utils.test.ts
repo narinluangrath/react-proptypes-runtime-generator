@@ -63,7 +63,7 @@ describe("json-utils", () => {
       expect(stringify(foo)).toMatchInlineSnapshot(`
         "{
           \\"bar\\": \\"baz\\",
-          \\"fizz\\": \\"[Circular ~]\\"
+          \\"fizz\\": \\"[Circular]\\"
         }"
       `);
     });

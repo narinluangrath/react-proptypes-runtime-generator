@@ -1,4 +1,4 @@
-const safeStringify = require("json-stringify-safe");
+const safeStringify = require("fast-safe-stringify");
 
 // Adapted from https://stackoverflow.com/a/56150320
 
