@@ -1,6 +1,6 @@
 import { isPlainObject } from "lodash";
 
-import { scrubCircularReferences } from "./scrub-circular-references";
+import { scrubCircularReferences } from "./json-utils";
 import { ObjectStore } from "./object-store";
 import { PropType, ObjectTypeShape } from "./types";
 

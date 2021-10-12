@@ -37,3 +37,7 @@ export function stringify(data: any) {
 export function parse(str: string) {
   return JSON.parse(str, reviver);
 }
+
+export function scrubCircularReferences(obj: object) {
+  return parse(stringify(obj));
+}
