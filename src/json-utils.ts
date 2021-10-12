@@ -31,7 +31,7 @@ function reviver(_: string, value: any) {
 }
 
 export function stringify(data: any) {
-  return safeStringify(data, replacer, 2);
+  return safeStringify(data, replacer, 2, { depthLimit: 10, edgesLimit: 10 });
 }
 
 export function parse(str: string) {
