@@ -7,6 +7,20 @@ import { babel } from '@rollup/plugin-babel';
 import pkg from './package.json';
 
 export default [
+	// Server
+	{
+		input: 'src/server.ts',
+		plugins: [
+			nodeResolve(),   // so Rollup can find node modules
+			commonjs(),      // so Rollup can convert node modules to an ES modules
+			typescript(),    // so Rollup can convert TypeScript to JavaScript
+			babel({ babelHelpers: 'inline' }),
+		],
+		output: [
+			{ file: pkg.bin['rprg-server'], format: 'cjs', banner: '#!/usr/bin/env node' },
+		],
+		external: [],
+	},
 	// React component
 	{
 		input: 'src/index.ts',
@@ -22,18 +36,4 @@ export default [
 		],
 		external: ['react'],
 	},
-
-	// Server
-	{
-		input: 'src/server.ts',
-		plugins: [
-			nodeResolve(),   // so Rollup can find node modules
-			commonjs(),      // so Rollup can convert node modules to an ES modules
-			typescript(),    // so Rollup can convert TypeScript to JavaScript
-			babel({ babelHelpers: 'bundled' }),
-		],
-		output: [
-			{ file: pkg.bin['rprg-server'], format: 'cjs', banner: '#!/usr/bin/env node' },
-		],
-	}
 ];
