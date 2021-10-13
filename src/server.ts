@@ -16,7 +16,11 @@ app.post("/", (req, res) => {
   const data = req.body ?? "";
   const stringified = stringify(data);
   const sanitized = stringified.replace(/\n/g, "");
-  fs.appendFile("data.json", sanitized + "\n", console.error);
+  fs.appendFile("data.json", sanitized + "\n", (err: Error) => {
+    if (err) {
+      console.error(err);
+    }
+  });
   res.send("ok");
 });
 
