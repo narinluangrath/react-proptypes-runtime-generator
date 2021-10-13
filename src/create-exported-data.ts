@@ -39,16 +39,18 @@ export function createExportedData(data: FiberNodeData[]) {
       // generate different propTypes. @TODO: Handle conflicts intelligently
       exportedComponentData.get(componentId)!.propTypes[propName] = propType;
 
-      if (!exportedPropTypeData.get(propType)) {
-        exportedPropTypeData.set(
-          propType,
-          initPropTypeData(objStore.get(propType)!)
-        );
+      if (propType.startsWith("ObjectType")) {
+        if (!exportedPropTypeData.get(propType)) {
+          exportedPropTypeData.set(
+            propType,
+            initPropTypeData(objStore.get(propType)!)
+          );
+        }
+        exportedPropTypeData
+          .get(propType)!
+          .associatedComponentIds.add(componentId);
+        exportedPropTypeData.get(propType)!.associatedPropNames.add(propName);
       }
-      exportedPropTypeData
-        .get(propType)!
-        .associatedComponentIds.add(componentId);
-      exportedPropTypeData.get(propType)!.associatedPropNames.add(propName);
     });
   });
 

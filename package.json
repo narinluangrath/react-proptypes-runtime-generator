@@ -8,7 +8,8 @@
   "browser": "dist/index.esm.js",
   "types": "dist/index.d.ts",
   "bin": {
-    "rprg-server": "bin/rprg-server.js"
+    "rprg-server": "bin/rprg-server.js",
+    "rprg-data-etl": "bin/rprg-data-etl.js"
   },
   "scripts": {
     "build": "rm -rf dist/* bin/* && rollup -c",

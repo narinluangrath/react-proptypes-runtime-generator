@@ -45,7 +45,7 @@ export function getPropType(
       : `PropTypes.array`;
   }
 
-  if (x?.$$typeof) {
+  if (x?.$$typeof || x?._owner) {
     return "PropTypes.node";
   }
 
