@@ -1,16 +1,11 @@
 import * as React from "react";
-import { saveAs } from "file-saver";
+import type { Fiber } from "react-reconciler";
 
 import { stringify } from "./json-utils";
 import { collectFiberNodeData } from "./collect-fiber-node-data";
-import { createExportedData } from "./create-exported-data";
 import { traverseDomBfs } from "./traverse-dom-bfs";
 import { getFiberNodeName } from "./get-fiber-node-data";
-import { reactFiberRecur } from "./react-fiber-recur";
-import type { FiberNodeData } from "./types";
-import type { Fiber } from "react-reconciler";
-
-const data: FiberNodeData[] = [];
+import { traverseReactFiber } from "./traverse-react-fiber";
 
 export const PropTypesRuntimeGenerator: React.FC = ({ children }) => {
   const [selfNode, setSelfNode] = React.useState<Fiber | null>(null);
@@ -29,7 +24,7 @@ export const PropTypesRuntimeGenerator: React.FC = ({ children }) => {
     const rootNode: Fiber =
       // @ts-expect-error
       root?._reactRootContainer?._internalRoot?.current;
-    const self = reactFiberRecur(
+    const self = traverseReactFiber(
       rootNode,
       (node) => getFiberNodeName(node) === "PropTypesRuntimeGenerator"
     );
@@ -43,11 +38,9 @@ export const PropTypesRuntimeGenerator: React.FC = ({ children }) => {
         console.error("Failed to collect data");
         return;
       }
-      const d = collectFiberNodeData(selfNode?.child);
-      const strings = d
+      const sendNodeData = collectFiberNodeData(selfNode?.child)
         .map((datum) => {
           try {
-            console.log(datum);
             const str = stringify(datum);
             return fetch("http://localhost:1234/", {
               method: "POST",
@@ -59,18 +52,7 @@ export const PropTypesRuntimeGenerator: React.FC = ({ children }) => {
           }
         })
         .filter(Boolean);
-      Promise.allSettled(strings);
-      data.push(...d);
-    };
-
-    // @ts-expect-error
-    window.exportData = () => {
-      const exportedData = createExportedData(data);
-      const formattedData = stringify(exportedData);
-      const blob = new Blob([formattedData], {
-        type: "text/plain;charset=utf-8",
-      });
-      saveAs(blob, "data.json");
+      Promise.allSettled(sendNodeData);
     };
   }, [selfNode]);
 

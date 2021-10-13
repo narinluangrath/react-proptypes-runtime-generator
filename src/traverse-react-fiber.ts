@@ -1,6 +1,6 @@
 import type { Fiber } from "react-reconciler";
 
-export function reactFiberRecur(
+export function traverseReactFiber(
   rootNode: Fiber,
   cb: (node: Fiber) => boolean | null | undefined | void
 ): Fiber | null {
@@ -9,14 +9,14 @@ export function reactFiberRecur(
   }
 
   if (rootNode.child) {
-    const res = reactFiberRecur(rootNode.child, cb);
+    const res = traverseReactFiber(rootNode.child, cb);
     if (res) {
       return res;
     }
   }
 
   if (rootNode.sibling) {
-    const res = reactFiberRecur(rootNode.sibling, cb);
+    const res = traverseReactFiber(rootNode.sibling, cb);
     if (res) {
       return res;
     }

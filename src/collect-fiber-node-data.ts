@@ -1,12 +1,12 @@
 import type { Fiber } from "react-reconciler";
 
-import { reactFiberRecur } from "./react-fiber-recur";
+import { traverseReactFiber } from "./traverse-react-fiber";
 import { getFiberNodeData } from "./get-fiber-node-data";
 import type { FiberNodeData } from "./types";
 
 export function collectFiberNodeData(root: Fiber): FiberNodeData[] {
   const data: FiberNodeData[] = [];
-  reactFiberRecur(root, (node) => {
+  traverseReactFiber(root, (node) => {
     const datum = getFiberNodeData(node);
     if (
       datum.componentId.split(":").filter((s) => s !== "").length === 2 &&

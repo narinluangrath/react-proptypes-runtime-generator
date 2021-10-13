@@ -1,4 +1,4 @@
-import { reactFiberRecur } from "./react-fiber-recur";
+import { traverseReactFiber } from "./traverse-react-fiber";
 import type { Fiber } from "react-reconciler";
 
 /**
@@ -59,7 +59,7 @@ const root = {
 describe("react-fiber-recur", () => {
   it("traverses the tree using depth first search", () => {
     const visitedKeys: (string | null)[] = [];
-    reactFiberRecur(root, (node) => {
+    traverseReactFiber(root, (node) => {
       visitedKeys.push(node.key);
     });
     expect(visitedKeys).toEqual([
@@ -77,7 +77,7 @@ describe("react-fiber-recur", () => {
 
   it("stops traversing when the callback returns true", () => {
     const visitedKeys: (string | null)[] = [];
-    reactFiberRecur(root, (node) => {
+    traverseReactFiber(root, (node) => {
       visitedKeys.push(node.key);
       return node.key === "div";
     });
