@@ -50,6 +50,14 @@ const getFiberPropsInstance = (node: Fiber): object => {
   return omit(props, "children");
 };
 
+export const getComponentFromId = (id: string) => {
+  const [fileName, componentName] = id.split(":");
+  return {
+    fileName,
+    componentName,
+  };
+};
+
 export const getFiberNodeData = (node: Fiber): FiberNodeData => ({
   componentId: `${node._debugSource?.fileName ?? ""}:${getFiberNodeName(node)}`,
   propsInstance: getFiberPropsInstance(node),
