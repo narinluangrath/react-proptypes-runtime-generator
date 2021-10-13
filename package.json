@@ -11,7 +11,7 @@
     "rprg-server": "bin/rprg-server.js"
   },
   "scripts": {
-    "build": "rm -rf dist/* bin/* node_modules/react && rollup -c",
+    "build": "rm -rf dist/* bin/* && rollup -c",
     "dev": "npm run build -- -w",
     "deploy:patch": "npm run build && npm version patch && npm publish --access public",
     "deploy:minor": "npm run build && npm version minor && npm publish --access public",

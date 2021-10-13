@@ -57,7 +57,7 @@ export const getFiberNodeData = (node: Fiber): FiberNodeData => ({
 });
 
 // ._debugSource
-// .elementtype
+// .elementType
 // .memoizedProps
 // .pendingProps
 // .stateNode

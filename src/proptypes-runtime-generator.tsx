@@ -47,6 +47,7 @@ export const PropTypesRuntimeGenerator: React.FC = ({ children }) => {
       const strings = d
         .map((datum) => {
           try {
+            console.log(datum);
             const str = stringify(datum);
             return fetch("http://localhost:1234/", {
               method: "POST",
