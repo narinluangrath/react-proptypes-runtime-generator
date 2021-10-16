@@ -7,19 +7,19 @@ export const getFiberNodeName = (node: Fiber): string => {
   const defaultName = "(Unknown Name)";
 
   // Handle nodes cooresponding to Context, Memo, ForwardRef, etc.
-  const sym = node?.elementType?.$$typeof;
+  const sym = node?.elementType?.$$typeof ?? node?.type?.$$typeof;
   if (typeof sym === "symbol") {
-    return Symbol.keyFor(node?.elementType?.$$typeof) || defaultName;
+    return Symbol.keyFor(sym) || defaultName;
   }
 
   // Handle "normal" nodes (function/class component instances)
-  const componentName = node?.elementType?.name;
+  const componentName = node?.elementType?.name ?? node?.elementType?.displayName ?? node?.type?.name ?? node?.type?.displayName;
   if (typeof componentName === "string") {
     return componentName;
   }
 
   // Handle native dom nodes
-  const domNodeName = node?.elementType;
+  const domNodeName = node?.elementType ?? node?.type;
   if (typeof domNodeName === "string") {
     return domNodeName;
   }

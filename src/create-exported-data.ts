@@ -2,20 +2,20 @@ import { ObjectStore } from "./object-store";
 import { getPropType } from "./get-proptype";
 import type {
   FiberNodeData,
-  ExportedComponentData,
-  ExportedPropTypeData,
+  ComponentData,
+  PropTypeData,
   PropType,
   ObjectTypeShape,
-  PropTypeData,
-  ComponentData,
+  PropTypeDatum,
+  ComponentDatum,
 } from "./types";
 
-const initComponentData = (): ComponentData => ({
+const initComponentData = (): ComponentDatum => ({
   propsInstances: new Set(),
   propTypes: {},
 });
 
-const initPropTypeData = (objectTypeShape: ObjectTypeShape): PropTypeData => ({
+const initPropTypeData = (objectTypeShape: ObjectTypeShape): PropTypeDatum => ({
   associatedComponentIds: new Set(),
   associatedPropNames: new Set(),
   objectTypeShape,
@@ -23,39 +23,40 @@ const initPropTypeData = (objectTypeShape: ObjectTypeShape): PropTypeData => ({
 
 const objStore = new ObjectStore<ObjectTypeShape>();
 
-export function createExportedData(data: FiberNodeData[]) {
-  const exportedComponentData: ExportedComponentData = new Map();
-  const exportedPropTypeData: ExportedPropTypeData = new Map();
+export function createExportedData(data: Omit<FiberNodeData, 'isDOM'>[]) {
+  const componentData: ComponentData = new Map();
+  const propTypeData: PropTypeData = new Map();
 
   data.forEach(({ propsInstance, componentId }) => {
-    if (!exportedComponentData.get(componentId)) {
-      exportedComponentData.set(componentId, initComponentData());
+    if (!componentData.get(componentId)) {
+      componentData.set(componentId, initComponentData());
     }
-    exportedComponentData.get(componentId)!.propsInstances.add(propsInstance);
+    componentData.get(componentId)!.propsInstances.add(propsInstance);
 
     Object.entries(propsInstance).forEach(([propName, propValue]) => {
       const propType: PropType = getPropType(propValue, objStore);
       // Some keys might get overwritten if different propsInstances
       // generate different propTypes. @TODO: Handle conflicts intelligently
-      exportedComponentData.get(componentId)!.propTypes[propName] = propType;
+      componentData.get(componentId)!.propTypes[propName] = propType;
+      const thing = objStore.get(propType)!
 
       if (propType.startsWith("ObjectType")) {
-        if (!exportedPropTypeData.get(propType)) {
-          exportedPropTypeData.set(
+        if (!propTypeData.get(propType)) {
+          propTypeData.set(
             propType,
-            initPropTypeData(objStore.get(propType)!)
+            initPropTypeData(thing)
           );
         }
-        exportedPropTypeData
+        propTypeData
           .get(propType)!
           .associatedComponentIds.add(componentId);
-        exportedPropTypeData.get(propType)!.associatedPropNames.add(propName);
+        propTypeData.get(propType)!.associatedPropNames.add(propName);
       }
     });
   });
 
   return {
-    exportedComponentData,
-    exportedPropTypeData,
+    componentData,
+    propTypeData,
   };
 }

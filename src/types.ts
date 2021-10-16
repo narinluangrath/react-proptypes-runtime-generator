@@ -31,17 +31,17 @@ export type FiberNodeData = {
   isDOM: boolean;
 };
 
-export type PropTypeData = {
+export type PropTypeDatum = {
   associatedPropNames: Set<PropName>;
   associatedComponentIds: Set<ComponentId>;
   objectTypeShape: ObjectTypeShape;
 };
 
-export type ExportedPropTypeData = Map<PropType, PropTypeData>;
+export type PropTypeData = Map<PropType, PropTypeDatum>;
 
-export type ComponentData = {
+export type ComponentDatum = {
   propTypes: { [propName: string]: PropType };
   propsInstances: Set<PropsInstance>;
 };
 
-export type ExportedComponentData = Map<ComponentId, ComponentData>;
+export type ComponentData = Map<ComponentId, ComponentDatum>;
