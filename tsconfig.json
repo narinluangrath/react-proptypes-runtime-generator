@@ -7,6 +7,9 @@
     // Ensure that Babel can safely transpile files in the TypeScript project
     "isolatedModules": true,
     "declarationDir": "dist",
+    "jsx": "react-jsx",
+    "allowSyntheticDefaultImports": true,
+    "downlevelIteration": true,
   },
   "include": ["src/**/*"],
   "exclude": ["src/**/*.test.ts"]

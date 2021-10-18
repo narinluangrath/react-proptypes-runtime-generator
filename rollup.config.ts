@@ -14,6 +14,21 @@ import pkg from './package.json';
 const extensions = ['.js', '.jsx', '.ts', '.tsx'];
 
 export default defineConfig([
+	// React component
+	{
+		input: 'src/index.ts',
+		plugins: [
+			typescript(),
+			nodeResolve({ extensions }),   // so Rollup can find node modules
+			commonjs({ extensions }),      // so Rollup can convert node modules to an ES modules
+			babel({ babelHelpers: 'bundled', extensions }),
+		],
+		output: [
+			{ file: pkg.main, format: 'cjs' },
+			{ file: pkg.module, format: 'es' }
+		],
+		external: ['react'],
+	},
 	// Server
 	{
 		input: 'src/backend/server.ts',
@@ -56,20 +71,5 @@ export default defineConfig([
 			{ file: pkg.bin['rprg-data-etl'], format: 'cjs', banner: '#!/usr/bin/env node' },
 		],
 		external: [],
-	},
-	// React component
-	{
-		input: 'src/index.ts',
-		plugins: [
-			typescript(),
-			nodeResolve({ extensions }),   // so Rollup can find node modules
-			commonjs({ extensions }),      // so Rollup can convert node modules to an ES modules
-			babel({ babelHelpers: 'bundled', extensions }),
-		],
-		output: [
-			{ file: pkg.main, format: 'cjs' },
-			{ file: pkg.module, format: 'es' }
-		],
-		external: ['react'],
 	},
 ]);
