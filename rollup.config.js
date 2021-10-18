@@ -1,20 +1,20 @@
 // https://github.com/rollup/rollup-starter-lib/blob/typescript/rollup.config.js
-
+import { defineConfig } from 'rollup';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
-import typescript from '@rollup/plugin-typescript';
 import { babel } from '@rollup/plugin-babel';
 import pkg from './package.json';
 
-export default [
+const extensions = ['.js', '.jsx', '.ts', '.tsx'];
+
+export default defineConfig([
 	// Server
 	{
 		input: 'src/backend/server.ts',
 		plugins: [
-			nodeResolve(),   // so Rollup can find node modules
-			commonjs(),      // so Rollup can convert node modules to an ES modules
-			typescript(),    // so Rollup can convert TypeScript to JavaScript
-			babel({ babelHelpers: 'inline' }),
+			nodeResolve({ extensions }),   // so Rollup can find node modules
+			babel({ babelHelpers: 'bundled', extensions }),
+			commonjs({ extensions }),      // so Rollup can convert node modules to an ES modules
 		],
 		output: [
 			{ file: pkg.bin['rprg-server'], format: 'cjs', banner: '#!/usr/bin/env node' },
@@ -25,10 +25,9 @@ export default [
 	{
 		input: 'src/backend/data-etl.ts',
 		plugins: [
-			nodeResolve(),   // so Rollup can find node modules
-			commonjs(),      // so Rollup can convert node modules to an ES modules
-			typescript(),    // so Rollup can convert TypeScript to JavaScript
-			babel({ babelHelpers: 'inline' }),
+			nodeResolve({ extensions }),   // so Rollup can find node modules
+			babel({ babelHelpers: 'bundled', extensions }),
+			commonjs({ extensions }),      // so Rollup can convert node modules to an ES modules
 		],
 		output: [
 			{ file: pkg.bin['rprg-data-etl'], format: 'cjs', banner: '#!/usr/bin/env node' },
@@ -39,10 +38,9 @@ export default [
 	{
 		input: 'src/index.ts',
 		plugins: [
-			nodeResolve(),   // so Rollup can find node modules
-			commonjs(),      // so Rollup can convert node modules to an ES modules
-			typescript(),    // so Rollup can convert TypeScript to JavaScript
-			babel({ babelHelpers: 'bundled' }),
+			nodeResolve({ extensions }),   // so Rollup can find node modules
+			babel({ babelHelpers: 'bundled', extensions }),
+			commonjs({ extensions }),      // so Rollup can convert node modules to an ES modules
 		],
 		output: [
 			{ file: pkg.main, format: 'cjs' },
@@ -50,4 +48,4 @@ export default [
 		],
 		external: ['react'],
 	},
-];
+]);

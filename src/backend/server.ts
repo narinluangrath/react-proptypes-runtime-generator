@@ -1,5 +1,5 @@
 // For some reason using require doesn't work
-import { stringify } from "../json-utils";
+import { stringify } from "../json-utils.js";
 
 const express = require("express");
 const fs = require("fs");
@@ -11,7 +11,6 @@ const port = 1234;
 app.use(cors());
 app.use(express.json());
 
-// @ts-expect-error
 app.post("/", (req, res) => {
   const data = req.body ?? "";
   const stringified = stringify(data);
