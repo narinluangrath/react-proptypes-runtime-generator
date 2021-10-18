@@ -1,7 +1,7 @@
 import { defaults, omit, isPlainObject } from "lodash";
 import type { Fiber } from "react-reconciler";
 
-import type { FiberNodeData } from "./types";
+import type { FiberNodeData } from "../types";
 
 export const getFiberNodeName = (node: Fiber): string => {
   const defaultName = "(Unknown Name)";

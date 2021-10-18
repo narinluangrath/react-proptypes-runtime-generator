@@ -1,5 +1,5 @@
 // For some reason using require doesn't work
-import { stringify } from "./json-utils";
+import { stringify } from "../json-utils";
 
 const express = require("express");
 const fs = require("fs");

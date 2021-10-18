@@ -9,7 +9,7 @@ import pkg from './package.json';
 export default [
 	// Server
 	{
-		input: 'src/server.ts',
+		input: 'src/backend/server.ts',
 		plugins: [
 			nodeResolve(),   // so Rollup can find node modules
 			commonjs(),      // so Rollup can convert node modules to an ES modules
@@ -23,7 +23,7 @@ export default [
 	},
 	// ETL
 	{
-		input: 'src/data-etl.ts',
+		input: 'src/backend/data-etl.ts',
 		plugins: [
 			nodeResolve(),   // so Rollup can find node modules
 			commonjs(),      // so Rollup can convert node modules to an ES modules

@@ -1,8 +1,8 @@
 import { isPlainObject } from "lodash";
 
-import { scrubCircularReferences } from "./json-utils";
+import { scrubCircularReferences } from "../json-utils";
 import { ObjectStore } from "./object-store";
-import { PropType, ObjectTypeShape } from "./types";
+import { PropType, ObjectTypeShape } from "../types";
 
 export function getPropType(
   x: any,
