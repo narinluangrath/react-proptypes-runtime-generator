@@ -106,7 +106,6 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "fast-safe-stringify": "^2.1.1",
-    "func-loc": "^0.1.16",
     "globby": "^11.0.3",
     "lodash": "^4.17.21",
     "pkg-dir": "^4.2.0",
