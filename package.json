@@ -9,7 +9,8 @@
   "types": "dist/index.d.ts",
   "bin": {
     "rprg-server": "bin/rprg-server.js",
-    "rprg-data-etl": "bin/rprg-data-etl.js"
+    "rprg-data-etl": "bin/rprg-data-etl.js",
+    "rprg-post-install": "bin/rprg-post-install.js"
   },
   "scripts": {
     "build": "rm -rf dist/* bin/* && rollup -c",
@@ -20,6 +21,7 @@
     "test": "jest",
     "tsc": "tsc",
     "prepare": "husky install",
+    "postinstall": "bin/rprg-post-install.js",
     "docs": "typedoc --out docs src/index.ts"
   },
   "repository": {
@@ -104,7 +106,9 @@
     "express": "^4.17.1",
     "fast-safe-stringify": "^2.1.1",
     "func-loc": "^0.1.16",
+    "globby": "^11.0.3",
     "lodash": "^4.17.21",
+    "pkg-dir": "^4.2.0",
     "react-docgen": "^5.4.0"
   }
 }
