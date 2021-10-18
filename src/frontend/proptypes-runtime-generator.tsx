@@ -7,7 +7,7 @@ import { traverseDomBfs } from "./traverse-dom-bfs";
 import { getFiberNodeName } from "./get-fiber-node-data";
 import { traverseReactFiber } from "./traverse-react-fiber";
 
-export const PropTypesRuntimeGenerator: React.FC = ({ children }) => {
+export const PropTypesRuntimeGenerator = ({ children }) => {
   const [selfNode, setSelfNode] = React.useState<Fiber | null>(null);
 
   React.useEffect(() => {
@@ -56,5 +56,5 @@ export const PropTypesRuntimeGenerator: React.FC = ({ children }) => {
     };
   }, [selfNode]);
 
-  return <>{children}</>;
+  return children;
 };
