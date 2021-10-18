@@ -8,7 +8,7 @@ import type {
   ObjectTypeShape,
   PropTypeDatum,
   ComponentDatum,
-} from "./types";
+} from "../types";
 
 const initComponentData = (): ComponentDatum => ({
   propsInstances: new Set(),

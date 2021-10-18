@@ -3,7 +3,7 @@ import { cloneDeep } from "lodash";
 
 import { getPropType } from "./get-proptype";
 import { ObjectStore } from "./object-store";
-import { ObjectTypeShape } from "./types";
+import { ObjectTypeShape } from "../types";
 
 describe("getPropType", () => {
   it("handles primitive arguments", () => {

@@ -2,10 +2,10 @@ import { createInterface } from "readline";
 import { createReadStream } from "fs";
 import reactDocs from 'react-docgen';
 
-import { parse } from "./json-utils";
+import { parse } from "../json-utils";
 import { createExportedData } from "./create-exported-data";
-import { getComponentFromId } from './get-fiber-node-data';
-import type { FiberNodeData } from './types';
+import { getComponentFromId } from '../frontend/get-fiber-node-data';
+import type { FiberNodeData } from '../types';
 
 const lineReader = createInterface({ input: createReadStream("./data.json") });
 

@@ -2,7 +2,7 @@ import type { Fiber } from "react-reconciler";
 
 import { traverseReactFiber } from "./traverse-react-fiber";
 import { getFiberNodeData, getComponentFromId } from "./get-fiber-node-data";
-import type { FiberNodeData } from "./types";
+import type { FiberNodeData } from "../types";
 
 export function collectFiberNodeData(
   root: Fiber

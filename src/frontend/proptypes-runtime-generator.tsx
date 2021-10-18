@@ -1,7 +1,7 @@
 import * as React from "react";
 import type { Fiber } from "react-reconciler";
 
-import { stringify } from "./json-utils";
+import { stringify } from "../json-utils";
 import { collectFiberNodeData } from "./collect-fiber-node-data";
 import { traverseDomBfs } from "./traverse-dom-bfs";
 import { getFiberNodeName } from "./get-fiber-node-data";
