@@ -1,1 +1,0 @@
-export { PropTypesRuntimeGenerator } from './frontend/proptypes-runtime-generator';

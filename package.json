@@ -12,15 +12,12 @@
     "rprg-post-install": "bin/rprg-post-install.js"
   },
   "scripts": {
-    "build": "rimraf dist/* bin/* && rollup --config rollup.config.ts --configPlugin @rollup/plugin-typescript",
-    "dev": "npm run build -- -w",
+    "build": "# TODO",
     "deploy:patch": "npm run build && npm version patch && npm publish --access public",
     "deploy:minor": "npm run build && npm version minor && npm publish --access public",
     "deploy:major": "npm run build && npm version major && npm publish --access public",
     "test": "jest",
-    "tsc": "tsc",
-    "prepare": "husky install",
-    "docs": "typedoc --out docs src/index.ts"
+    "tsc": "tsc"
   },
   "repository": {
     "type": "git",
@@ -49,11 +46,6 @@
     "@babel/preset-env": "^7.15.6",
     "@babel/preset-react": "^7.14.5",
     "@babel/preset-typescript": "^7.15.0",
-    "@rollup/plugin-babel": "^5.3.0",
-    "@rollup/plugin-commonjs": "^21.0.0",
-    "@rollup/plugin-json": "^4.1.0",
-    "@rollup/plugin-node-resolve": "^13.0.5",
-    "@rollup/plugin-typescript": "^8.3.0",
     "@testing-library/react": "^12.1.0",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
@@ -82,11 +74,8 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-test-renderer": "^17.0.2",
-    "rimraf": "^3.0.2",
-    "rollup": "^2.58.0",
     "ts-node": "^10.2.1",
     "tslib": "^2.3.1",
-    "typedoc": "^0.20.35",
     "typescript": "^4.2.4"
   },
   "peerDependencies": {
@@ -101,8 +90,6 @@
     "src/**/*.{scss,css,md}": "prettier --write"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.12.1",
-    "core-js": "^2.6.12",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "fast-safe-stringify": "^2.1.1",
