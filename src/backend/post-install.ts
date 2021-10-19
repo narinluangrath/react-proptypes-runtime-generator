@@ -36,8 +36,8 @@ async function main(pattern = "**/*.{js,jsx,ts,tsx}") {
   const theTryCatch = reactDocsData
     .map(({ file, i }) => `
       try {
-        DefaultExport.__filename = '${file}';
-        Object.keys(NamedExports).forEach(key => {
+        DefaultExport${i}.__filename = '${file}';
+        Object.keys(NamedExports${i}).forEach(key => {
           NamedExports[key].__filename = '${file}';
         });
       } catch (e) {
@@ -46,5 +46,9 @@ async function main(pattern = "**/*.{js,jsx,ts,tsx}") {
       }
     `)
     .join("\n")
+
+  fs.writeFile('allTheImports.js', `${theImports}\n\n${theTryCatch}\n`, (err) => {
+    
+  })
 
 main();
