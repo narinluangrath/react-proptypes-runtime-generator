@@ -1,4 +1,4 @@
-# Keep in sync with .prettierignore
+# Keep in sync with .prettierignore and .eslintignore
 
 node_modules
 dist

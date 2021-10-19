@@ -1,6 +1,6 @@
-const express = require("express");
-const fs = require("fs");
-const cors = require("cors");
+import express from "express";
+import fs from "fs";
+import cors from "cors";
 
 const app = express();
 const port = 1234;
@@ -12,7 +12,7 @@ app.post("/", (req, res) => {
   const data = req.body ?? "";
   const stringified = JSON.stringify(data);
   const sanitized = stringified.replace(/\n/g, "");
-  fs.appendFile("data.json", sanitized + "\n", (err: Error) => {
+  fs.appendFile("data.json", sanitized + "\n", err => {
     if (err) {
       console.error(err);
     }

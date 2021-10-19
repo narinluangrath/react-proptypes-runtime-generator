@@ -1,4 +1,4 @@
-# Keep in sync with .gitignore
+# Keep in sync with .gitignore and .eslintignore
 
 node_modules
 dist

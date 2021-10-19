@@ -1,0 +1,7 @@
+# Keep in sync with .prettierignore and .gitignore
+
+node_modules
+dist
+bin
+.vscode
+data.json
