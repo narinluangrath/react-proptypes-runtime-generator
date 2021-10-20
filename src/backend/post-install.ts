@@ -3,7 +3,7 @@ import fs from "fs";
 // import path from "path";
 
 import globby from "globby";
-import reactDocs from "react-docgen";
+import * as reactDocs from "react-docgen";
 import type { Result } from "react-docgen";
 // import { sync as pkgDirSync } from "pkg-dir";
 
@@ -24,12 +24,17 @@ async function writeComponentMap(pattern = "**/*.{js,jsx,ts,tsx}") {
   for (const file of files) {
     try {
       const fileData = await readFile(file);
-      const componentDefs = reactDocs.parse(
-        fileData,
-        reactDocs.resolver.findAllExportedComponentDefinitions
-      );
-      if (componentDefs.length) {
-        reactDocsData[file] = componentDefs;
+      try {
+        const componentDefs = reactDocs.parse(
+          fileData,
+          reactDocs.resolver.findAllExportedComponentDefinitions
+        );
+        if (componentDefs.length) {
+          reactDocsData[file] = componentDefs;
+        }
+      } catch (error) {
+        console.warn(`Failed to find component definitions in file ${file}`);
+        console.warn(error);
       }
     } catch (error) {
       handleError(error, `Failed to read file ${file}`);
@@ -50,7 +55,7 @@ async function writeRegisterFunctions(componentMap: Record<string, Result[]>) {
 ${Object.keys(componentMap)
   .map(
     (file, i) =>
-      `import DefaultExport${i}, * as NamedExports${i} from '${file}';`
+      `import DefaultExport${i}, * as NamedExports${i} from './${file}';`
   )
   .join("\n")}
 
@@ -68,14 +73,15 @@ function registerExports(defaultExport, namedExports, file) {
       }
     });
   } catch (e) {
-    console.warning('Failed to modify React component for tracking purposes');
-    console.warning(e);
+    console.warn('Failed to modify React component for tracking purposes');
+    console.warn(e);
   }
+}
 
 ${Object.keys(componentMap)
   .map(
     (file, i) =>
-      `registerExports(DefaultExport${i}, NamedExports${i}, ${file});`
+      `registerExports(DefaultExport${i}, NamedExports${i}, './${file}');`
   )
   .join("\n")}
 `;
