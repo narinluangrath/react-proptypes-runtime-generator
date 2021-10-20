@@ -1,27 +1,27 @@
-type Result = {
-  description: string;
-  displayName: string;
-  props: {
-    [propName: string]: {
-      type: {
-        name: string;
-        value?: string;
-        raw?: string;
-      };
-      flowType?: object;
-      tsType?: object;
-      required: boolean;
-      description: string;
-      defaultValue?: {
-        value: string;
-        computed: boolean;
+declare module "react-docgen" {
+  export type Result = {
+    description: string;
+    displayName: string;
+    props: {
+      [propName: string]: {
+        type: {
+          name: string;
+          value?: string;
+          raw?: string;
+        };
+        flowType?: object;
+        tsType?: object;
+        required: boolean;
+        description: string;
+        defaultValue?: {
+          value: string;
+          computed: boolean;
+        };
       };
     };
+    composes?: string;
   };
-  composes?: string;
-};
 
-declare module "react-docgen" {
   export function parse(
     source: string | Buffer,
     resolver?: (...args: any) => any,

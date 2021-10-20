@@ -4,7 +4,8 @@ import fs from "fs";
 
 import globby from "globby";
 import reactDocs from "react-docgen";
-import { sync as pkgDirSync } from "pkg-dir";
+import type { Result } from "react-docgen";
+// import { sync as pkgDirSync } from "pkg-dir";
 
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
@@ -18,7 +19,7 @@ const handleError = (e: Error, message: string) => {
 };
 
 async function writeComponentMap(pattern = "**/*.{js,jsx,ts,tsx}") {
-  const reactDocsData = {};
+  const reactDocsData: Record<string, Result[]> = {};
   const files = await globby(pattern);
   for (const file of files) {
     try {
@@ -44,7 +45,7 @@ async function writeComponentMap(pattern = "**/*.{js,jsx,ts,tsx}") {
   }
 }
 
-async function writeRegisterFunctions(componentMap) {
+async function writeRegisterFunctions(componentMap: Record<string, Result[]>) {
   const registerFunctions = `import componentMap from './component-map';
 ${Object.keys(componentMap)
   .map(
@@ -79,20 +80,20 @@ ${Object.keys(componentMap)
   .join("\n")}
 `;
   try {
-    await writeFile("register-functions.js", registerFunctions);
+    await writeFile("./register-functions.js", registerFunctions);
   } catch (error) {
     handleError(error, "Failed to write register-functions.js");
   }
 }
 
 async function main() {
-  const pkgDir = pkgDirSync();
-  if (!pkgDir) {
-    console.error("Failed to find root package directory.");
-  }
+  // const pkgDir = pkgDirSync();
+  // if (!pkgDir) {
+  //   console.error("Failed to find root package directory.");
+  // }
 
   const componentMap = await writeComponentMap();
-  await writeRegisterFunctions(componentMap);
+  await writeRegisterFunctions(componentMap!);
 }
 
 main();
