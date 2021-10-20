@@ -18,7 +18,10 @@ const handleError = (e: Error, message: string) => {
   process.exit(1);
 };
 
-async function writeComponentMap(pattern = "**/*.{js,jsx,ts,tsx}") {
+async function writeComponentMap(
+  pattern = "./packages/**/*.{js,jsx,ts,tsx}",
+  babelConfig = "./babel.config.js"
+) {
   const reactDocsData: Record<string, Result[]> = {};
   const files = await globby(pattern);
   for (const file of files) {
@@ -27,17 +30,21 @@ async function writeComponentMap(pattern = "**/*.{js,jsx,ts,tsx}") {
       try {
         const componentDefs = reactDocs.parse(
           fileData,
-          reactDocs.resolver.findAllExportedComponentDefinitions
+          reactDocs.resolver.findAllExportedComponentDefinitions,
+          undefined,
+          { configFile: babelConfig }
         );
         if (componentDefs.length) {
           reactDocsData[file] = componentDefs;
         }
       } catch (error) {
-        console.warn(`Failed to find component definitions in file ${file}`);
+        console.warn(
+          `\n\nFailed to find component definitions in file ${file}`
+        );
         console.warn(error);
       }
     } catch (error) {
-      handleError(error, `Failed to read file ${file}`);
+      handleError(error, `\n\nFailed to read file ${file}`);
     }
   }
 
@@ -46,7 +53,7 @@ async function writeComponentMap(pattern = "**/*.{js,jsx,ts,tsx}") {
     await writeFile("./component-map.js", `export default ${stringified}`);
     return reactDocsData;
   } catch (error) {
-    handleError(error, "Failed to write component-map.js file");
+    handleError(error, "\n\nFailed to write component-map.js file");
   }
 }
 
@@ -88,7 +95,7 @@ ${Object.keys(componentMap)
   try {
     await writeFile("./register-functions.js", registerFunctions);
   } catch (error) {
-    handleError(error, "Failed to write register-functions.js");
+    handleError(error, "\n\nFailed to write register-functions.js");
   }
 }
 

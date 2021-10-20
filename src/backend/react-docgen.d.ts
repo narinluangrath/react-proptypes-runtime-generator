@@ -29,9 +29,8 @@ declare module "react-docgen" {
     options?: {
       fileName?: string;
       cwd?: string;
+      configFile?: string;
       parserOptions?: object;
-      resolver?: (...args: any) => any;
-      handlers?: (...args: any) => any;
     }
   ): Result[];
 
