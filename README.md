@@ -1,3 +1,39 @@
+# CLI
+
+react-storystrap init --componentFiles [string] --babelConfig [string] 
+
+- Create .storybook directory
+- Create .storybook/register-components.js
+- Create .storybook/file-component-map.js
+- Create .storybook/config.js with shape
+
+```ts
+export default {
+  port: 1234,
+}
+```
+
+react-storystrap start-server
+
+- Writes objects of shape to file compmonent-data
+
+```ts
+{
+  componentId: ComponentId;
+  propsInstance: PropsInstance;
+  isDOM: boolean;
+};
+```
+
+react-storystrap generate-stories [--overwrite]
+
+- Write `X.story.js` files adjacent to `X.js` files
+- Create a story for each exported component
+- The story name should be the `displayName` of the component being described
+- If there are naming clashes add `(default)` or `(export0)`/`(export1)`/`...etc` suffix
+
+
+
 # React Typescript Package Boilerplate
 
   const parser = (0, _babelParser.default)(options, src);
