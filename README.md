@@ -1,7 +1,12 @@
 # React Typescript Package Boilerplate
 
-> One line description of the purpose of this package
-
+  const parser = (0, _babelParser.default)(options, src);
+    parse(src) {
+      return babel.parseSync(src, {
+        filename,
+        parserOpts,
+        ...babelOptions
+      });
 ## Motivation
 
 > In depth explanation of what this package is and why its different from existing npm modules
