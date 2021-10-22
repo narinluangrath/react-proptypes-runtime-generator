@@ -66,6 +66,7 @@
     "@types/react-dom": "^17.0.9",
     "@types/react-reconciler": "^0.26.3",
     "@types/traverse": "^0.6.32",
+    "@types/yargs": "^15.0.14",
     "@typescript-eslint/eslint-plugin": "^4.21.0",
     "@typescript-eslint/parser": "^4.21.0",
     "babel-jest": "^26.6.3",
@@ -106,6 +107,7 @@
     "globby": "^11.0.3",
     "lodash": "^4.17.21",
     "pkg-dir": "^4.2.0",
-    "react-docgen": "^5.4.0"
+    "react-docgen": "^5.4.0",
+    "yargs": "^15.4.1"
   }
 }
