@@ -1,3 +1,4 @@
+Change __exportPosition to __exportName
 Make imports relatively using fs.relative
 Do not run cli unless in root of package
 Write componentMap file by file so you don't run out of memory
