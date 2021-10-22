@@ -7,20 +7,18 @@
   "module": "dist/frontend/esm/index.js",
   "types": "dist/index.d.ts",
   "bin": {
-    "rprg-server": "bin/rprg-server.js",
-    "rprg-data-etl": "bin/rprg-data-etl.js",
-    "rprg-post-install": "bin/rprg-post-install.js"
+    "react-storystrap": "bin/react-storystrap.js"
   },
   "scripts": {
     "build": "npm run build:frontend && npm run build:backend",
     "build:frontend": "npm run build:frontend:esm && npm run build:frontend:cjs",
     "build:frontend:common": "tsc --project tsconfig-frontend.json",
-    "build:frontend:esm": "rm -rf dist/esm/* && npm run build:frontend:common -- --module es6 --outDir dist/frontend/esm",
-    "build:frontend:cjs": "rm -rf dist/cjs/* && npm run build:frontend:common -- --module commonjs --outDir dist/frontend/cjs",
+    "build:frontend:esm": "rm -rf dist/frontend/esm/* && npm run build:frontend:common -- --module es6 --outDir dist/frontend/esm",
+    "build:frontend:cjs": "rm -rf dist/frontend/cjs/* && npm run build:frontend:common -- --module commonjs --outDir dist/frontend/cjs",
     "build:backend": "npm run build:backend:esm && npm run build:backend:cjs",
     "build:backend:common": "tsc --project tsconfig-backend.json",
-    "build:backend:esm": "rm -rf dist/esm/* && npm run build:backend:common -- --module es6 --outDir dist/backend/esm",
-    "build:backend:cjs": "rm -rf dist/cjs/* && npm run build:backend:common -- --module commonjs --outDir dist/backend/cjs",
+    "build:backend:esm": "rm -rf dist/backend/esm/* && npm run build:backend:common -- --module es6 --outDir dist/backend/esm",
+    "build:backend:cjs": "rm -rf dist/backend/cjs/* && npm run build:backend:common -- --module commonjs --outDir dist/backend/cjs",
     "deploy:patch": "npm run build && npm version patch && npm publish --access public",
     "deploy:minor": "npm run build && npm version minor && npm publish --access public",
     "deploy:major": "npm run build && npm version major && npm publish --access public",

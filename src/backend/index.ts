@@ -21,7 +21,7 @@ if (commands.length > 1) {
 const command = commands[0];
 switch (command) {
   case "init":
-    init(argv.componentFiles, argv.babelConfig);
+    init(String(argv.componentFiles), String(argv.babelConfig));
     break;
   case "start-server":
     startServer();

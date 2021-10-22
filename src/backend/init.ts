@@ -3,7 +3,9 @@ import util from "util";
 // import path from "path";
 
 import globby from "globby";
+// @ts-ignore
 import * as reactDocs from "react-docgen";
+// @ts-ignore
 import type { Result } from "react-docgen";
 // import { sync as pkgDirSync } from "pkg-dir";
 
@@ -18,10 +20,7 @@ const handleError = (e: Error, message: string) => {
   process.exit(1);
 };
 
-async function writeComponentMap(
-  componentFiles = "./packages/**/*.{js,jsx,ts,tsx}",
-  babelConfig = "./babel.config.js"
-) {
+async function writeComponentMap(componentFiles: string, babelConfig: string) {
   const reactDocsData: Record<string, Result[]> = {};
   const files = await globby(componentFiles);
   for (const file of files) {
@@ -32,6 +31,7 @@ async function writeComponentMap(
           fileData,
           reactDocs.resolver.findAllExportedComponentDefinitions,
           undefined,
+          // @ts-ignore
           { configFile: babelConfig, filename: file }
         );
         if (componentDefs.length) {
@@ -99,7 +99,10 @@ ${Object.keys(componentMap)
   }
 }
 
-export async function init(componentFiles, babelConfig) {
+export async function init(
+  componentFiles = "./packages/**/*.{js,jsx,ts,tsx}",
+  babelConfig = "./babel.config.js"
+) {
   if (fs.existsSync(".storybook")) {
     throw Error(
       "Project already initialized, .storybook directory already exists"
