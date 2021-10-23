@@ -11,6 +11,7 @@ export function collectFiberNodeData(
   traverseReactFiber(root, (node) => {
     const { componentId, propsInstance, isDOM } = getFiberNodeData(node);
     const { componentName, fileName } = getComponentFromId(componentId);
+
     const isReactComponent = componentName && fileName;
     const notBuiltInComponent = !componentName.startsWith("react.");
     if (isReactComponent && notBuiltInComponent && !isDOM) {

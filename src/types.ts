@@ -19,8 +19,8 @@ export type PropType = string;
 export type PropName = string;
 export type ObjectTypeShape = { [propName: string]: PropType };
 
-// fileName and componentName separated by a colon
-// e.g. path/to/file:MyComponent
+// fileName, exportName and componentName separated by a colon
+// e.g. path/to/file:NameOfExport:MyComponent
 type ComponentId = string;
 
 type PropsInstance = { [propName: string]: any };

@@ -13,7 +13,11 @@ export const getFiberNodeName = (node: Fiber): string => {
   }
 
   // Handle "normal" nodes (function/class component instances)
-  const componentName = node?.elementType?.name ?? node?.elementType?.displayName ?? node?.type?.name ?? node?.type?.displayName;
+  const componentName =
+    node?.elementType?.displayName ??
+    node?.elementType?.name ??
+    node?.type?.displayName ??
+    node?.type?.name;
   if (typeof componentName === "string") {
     return componentName;
   }
@@ -51,15 +55,30 @@ const getFiberPropsInstance = (node: Fiber): object => {
 };
 
 export const getComponentFromId = (id: string) => {
-  const [fileName, componentName] = id.split(":");
+  const [fileName, exportName, componentName] = id.split(":");
   return {
     fileName,
+    exportName,
     componentName,
   };
 };
 
+// Provided by backend/init.ts
+const getFileName = (node: Fiber): string => {
+  const component = node?.elementType ?? node?.type;
+  return component?.__fileName ?? "";
+};
+
+// Provided by backend/init.ts
+const getExportName = (node: Fiber): string => {
+  const component = node?.elementType ?? node?.type;
+  return component?.__exportName ?? "";
+};
+
 export const getFiberNodeData = (node: Fiber): FiberNodeData => ({
-  componentId: `${node._debugSource?.fileName ?? ""}:${getFiberNodeName(node)}`,
+  componentId: `${getFileName(node)}:${getExportName(node)}:${getFiberNodeName(
+    node
+  )}`,
   propsInstance: getFiberPropsInstance(node),
   isDOM: typeof node?.elementType === "string",
 });

@@ -3,8 +3,8 @@
 - [x] Do not run cli unless in root of package
 - [] Write componentMap file by file so you don't run out of memory
 - [x] Create config file
-- [] Prefer displayName over name in get-fiber-node-data
-- [] Also collect __exportPosition, get filename from __filename
+- [x] Prefer displayName over name in get-fiber-node-data
+- [x] Also collect __exportPosition, get filename from __filename
 - [x] Import config in server, connect server to cli
 - [x] Chmod the cli
 - [] Implement some dedup logic on server so only the props instance with most data is saved

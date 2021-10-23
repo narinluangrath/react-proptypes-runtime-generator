@@ -6,6 +6,8 @@ describe("getFiberNodeData", () => {
     const functionElement = {
       elementType: {
         name: "FunctionComponent",
+        __fileName: "path/to/file",
+        __exportName: "default",
       },
       memoizedProps: {
         foo: "bar",
@@ -13,12 +15,9 @@ describe("getFiberNodeData", () => {
       pendingProps: {
         baz: "biz",
       },
-      _debugSource: {
-        fileName: "path/to/file",
-      },
     };
     expect(getFiberNodeData(functionElement as Fiber)).toEqual({
-      componentId: "path/to/file:FunctionComponent",
+      componentId: "path/to/file:default:FunctionComponent",
       propsInstance: { foo: "bar", baz: "biz" },
       isDOM: false,
     });
@@ -28,6 +27,8 @@ describe("getFiberNodeData", () => {
     const classElement = {
       elementType: {
         name: "ClassComponent",
+        __fileName: "path/to/file",
+        __exportName: "MyClassComponent",
       },
       memoizedProps: {
         foo: "bar",
@@ -35,12 +36,9 @@ describe("getFiberNodeData", () => {
       pendingProps: {
         baz: "biz",
       },
-      _debugSource: {
-        fileName: "path/to/file",
-      },
     };
     expect(getFiberNodeData(classElement as Fiber)).toEqual({
-      componentId: "path/to/file:ClassComponent",
+      componentId: "path/to/file:MyClassComponent:ClassComponent",
       propsInstance: { foo: "bar", baz: "biz" },
       isDOM: false,
     });
@@ -54,7 +52,7 @@ describe("getFiberNodeData", () => {
       pendingProps: {},
     };
     expect(getFiberNodeData(domElement as Fiber)).toEqual({
-      componentId: ":div",
+      componentId: "::div",
       propsInstance: {},
       isDOM: true,
     });
@@ -73,7 +71,7 @@ describe("getFiberNodeData", () => {
       },
     };
     expect(getFiberNodeData(contextProvider as Fiber)).toEqual({
-      componentId: ":react.provider",
+      componentId: "::react.provider",
       propsInstance: { foo: "bar", baz: "biz" },
       isDOM: false,
     });
@@ -93,7 +91,7 @@ describe("getFiberNodeData", () => {
       },
     };
     expect(getFiberNodeData(stringElement as Fiber)).toEqual({
-      componentId: ":Text",
+      componentId: "::Text",
       propsInstance: {},
       isDOM: false,
     });
