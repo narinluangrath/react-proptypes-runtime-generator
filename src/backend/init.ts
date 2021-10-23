@@ -85,7 +85,7 @@ function registerExports(defaultExport, namedExports, file) {
       defaultExport.__filename = file;
       defaultExport.__exportName = 'default';
     }
-    Object.keys(namedExports).sort().forEach((key, i) => {
+    Object.keys(namedExports).forEach((key) => {
       if (displayNames.includes(namedExports[key].displayName)) {
         namedExports[key].__filename = file;
         namedExports[key].__exportName = key;
