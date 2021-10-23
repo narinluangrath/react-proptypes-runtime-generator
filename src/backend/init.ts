@@ -11,6 +11,7 @@ import type { Result } from "react-docgen";
 
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
+const mkdir = util.promisify(fs.mkdir);
 
 // const rprgDir = path.resolve(pkgDir!, "./.rprg");
 
@@ -55,7 +56,10 @@ async function writeComponentMap(componentFiles: string, babelConfig: string) {
 
   const stringified = JSON.stringify(reactDocsData, null, 2);
   try {
-    await writeFile("./component-map.js", `export default ${stringified}`);
+    await writeFile(
+      ".storystrap/component-map.js",
+      `export default ${stringified}`
+    );
     return reactDocsData;
   } catch (error) {
     handleError(error, "\n\nFailed to write component-map.js file");
@@ -63,11 +67,11 @@ async function writeComponentMap(componentFiles: string, babelConfig: string) {
 }
 
 function getRelative(file: string) {
-  return path.relative(__dirname, file);
+  return path.relative(path.join(process.cwd(), ".storystrap"), file);
 }
 
-async function writeRegisterFunctions(componentMap: Record<string, Result[]>) {
-  const registerFunctions = `import componentMap from './component-map';
+async function writeRegisterComponents(componentMap: Record<string, Result[]>) {
+  const registerComponents = `import componentMap from './component-map';
 ${Object.keys(componentMap)
   .map(
     (file, i) =>
@@ -99,14 +103,14 @@ function registerExports(defaultExport, namedExports, file) {
 ${Object.keys(componentMap)
   .map(
     (file, i) =>
-      `registerExports(DefaultExport${i}, NamedExports${i}, './${file}');`
+      `registerExports(DefaultExport${i}, NamedExports${i}, '${file}');`
   )
   .join("\n")}
 `;
   try {
-    await writeFile("./register-functions.js", registerFunctions);
+    await writeFile(".storystrap/register-components.js", registerComponents);
   } catch (error) {
-    handleError(error, "\n\nFailed to write register-functions.js");
+    handleError(error, "\n\nFailed to write register-components.js");
   }
 }
 
@@ -114,12 +118,13 @@ export async function init(
   componentFiles = "./src/**/*.{js,jsx,ts,tsx}",
   babelConfig = "./babel.config.js"
 ) {
-  if (fs.existsSync(".storybook")) {
+  if (fs.existsSync(".storystrap")) {
     throw Error(
-      "Project already initialized, .storybook directory already exists"
+      "Project already initialized, .storystrap directory already exists"
     );
   }
+  await mkdir(".storystrap");
 
   const componentMap = await writeComponentMap(componentFiles, babelConfig);
-  await writeRegisterFunctions(componentMap!);
+  await writeRegisterComponents(componentMap!);
 }
