@@ -1,3 +1,5 @@
+import fs from "fs";
+
 import yargs from "yargs/yargs";
 import { init } from "./init";
 import { startServer } from "./start-server";
@@ -5,6 +7,18 @@ import { generateStories } from "./generate-stories";
 
 const { argv } = yargs(process.argv.slice(2));
 const commands = argv._;
+
+if (!fs.existsSync("./package.json")) {
+  throw Error(
+    "react-storystrap should only be called in the package root directory. Could not find package.json in current working directory"
+  );
+}
+
+if (!fs.existsSync("./node_modules")) {
+  throw Error(
+    "react-storystrap should only be called in the package root directory. Could not find node_modules in current working directory"
+  );
+}
 
 if (!commands.length) {
   throw Error(
