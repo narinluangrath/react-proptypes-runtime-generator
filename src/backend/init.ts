@@ -1,6 +1,6 @@
 import fs from "fs";
 import util from "util";
-// import path from "path";
+import path from "path";
 
 import globby from "globby";
 // @ts-ignore
@@ -23,7 +23,11 @@ const handleError = (e: Error, message: string) => {
 async function writeComponentMap(componentFiles: string, babelConfig: string) {
   const reactDocsData: Record<string, Result[]> = {};
   const files = await globby(componentFiles);
-  console.log(files);
+
+  if (!files?.length) {
+    throw Error(`No files match given componentFiles ${componentFiles}`);
+  }
+
   for (const file of files) {
     try {
       const fileData = await readFile(file);
@@ -58,12 +62,18 @@ async function writeComponentMap(componentFiles: string, babelConfig: string) {
   }
 }
 
+function getRelative(file: string) {
+  return path.relative(__dirname, file);
+}
+
 async function writeRegisterFunctions(componentMap: Record<string, Result[]>) {
   const registerFunctions = `import componentMap from './component-map';
 ${Object.keys(componentMap)
   .map(
     (file, i) =>
-      `import DefaultExport${i}, * as NamedExports${i} from './${file}';`
+      `import DefaultExport${i}, * as NamedExports${i} from '${getRelative(
+        file
+      )}';`
   )
   .join("\n")}
 
