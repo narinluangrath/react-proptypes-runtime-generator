@@ -7,13 +7,10 @@ import globby from "globby";
 import * as reactDocs from "react-docgen";
 // @ts-ignore
 import type { Result } from "react-docgen";
-// import { sync as pkgDirSync } from "pkg-dir";
 
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
 const mkdir = util.promisify(fs.mkdir);
-
-// const rprgDir = path.resolve(pkgDir!, "./.rprg");
 
 const handleError = (e: Error, message: string) => {
   console.error(message);
@@ -86,12 +83,12 @@ function registerExports(defaultExport, namedExports, file) {
   try {
     if (displayNames.includes(defaultExport.displayName)) {
       defaultExport.__filename = file;
-      defaultExport.__exportPosition = 'default';
+      defaultExport.__exportName = 'default';
     }
     Object.keys(namedExports).sort().forEach((key, i) => {
       if (displayNames.includes(namedExports[key].displayName)) {
         namedExports[key].__filename = file;
-        namedExports[key].__exportPosition = key;
+        namedExports[key].__exportName = key;
       }
     });
   } catch (e) {
@@ -125,6 +122,10 @@ export async function init(
   }
   await mkdir(".storystrap");
 
+  await writeFile(
+    ".storystrap/config.js",
+    "export default " + JSON.stringify({ port: 1234 }, null, 2)
+  );
   const componentMap = await writeComponentMap(componentFiles, babelConfig);
   await writeRegisterComponents(componentMap!);
 }

@@ -6,7 +6,7 @@
 - [] Prefer displayName over name in get-fiber-node-data
 - [] Also collect __exportPosition, get filename from __filename
 - [] Import config in server, connect server to cli
-- [] Chmod the cli
+- [x] Chmod the cli
 - [] Implement some dedup logic on server so only the props instance with most data is saved
 
 
