@@ -73,10 +73,10 @@ function registerExports(defaultExport, namedExports, file) {
       defaultExport.__filename = file;
       defaultExport.__exportPosition = 'default';
     }
-    Object.keys(namedExports).sort().forEach((key, exportPosition) => {
+    Object.keys(namedExports).sort().forEach((key, i) => {
       if (displayNames.includes(namedExports[key].displayName)) {
         namedExports[key].__filename = file;
-        namedExports[key].__exportPosition = exportPosition;
+        namedExports[key].__exportPosition = key;
       }
     });
   } catch (e) {

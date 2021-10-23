@@ -1,2 +1,2 @@
 #!/usr/bin/env node
-require('../dist/backend/cjs/backend/index.js')
+require('../dist/backend/cjs/backend/cli.js')
