@@ -124,7 +124,7 @@ export async function init(
 
   await writeFile(
     ".storystrap/config.js",
-    "export default " + JSON.stringify({ port: 1234 }, null, 2)
+    "module.exports = " + JSON.stringify({ port: 1234 }, null, 2)
   );
   const componentMap = await writeComponentMap(componentFiles, babelConfig);
   await writeRegisterComponents(componentMap!);
