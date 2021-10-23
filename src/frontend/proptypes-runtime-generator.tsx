@@ -41,12 +41,11 @@ export const PropTypesRuntimeGenerator: React.FC = ({ children }) => {
       const sendNodeData = collectFiberNodeData(selfNode?.child)
         .map((datum) => {
           try {
-            const str = stringify(datum);
             // @TODO: Get from config
             return fetch("http://localhost:1234/", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
-              body: str,
+              body: stringify(datum),
             });
           } catch (e) {
             return null;
