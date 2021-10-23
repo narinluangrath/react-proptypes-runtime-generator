@@ -23,6 +23,7 @@ const handleError = (e: Error, message: string) => {
 async function writeComponentMap(componentFiles: string, babelConfig: string) {
   const reactDocsData: Record<string, Result[]> = {};
   const files = await globby(componentFiles);
+  console.log(files);
   for (const file of files) {
     try {
       const fileData = await readFile(file);
@@ -100,7 +101,7 @@ ${Object.keys(componentMap)
 }
 
 export async function init(
-  componentFiles = "./packages/**/*.{js,jsx,ts,tsx}",
+  componentFiles = "./src/**/*.{js,jsx,ts,tsx}",
   babelConfig = "./babel.config.js"
 ) {
   if (fs.existsSync(".storybook")) {
