@@ -16,11 +16,13 @@ function countNonNulls(obj: object): number {
 export function startServer() {
   const app = express();
   const config = require(path.join(process.cwd(), ".storystrap/config.js"));
-  const data: Record<ComponentId, PropsInstance> = require(path.join(
-    process.cwd(),
-    ".storystrap/data.js"
-  ));
   const port = config?.port || 1234;
+
+  let data: Record<ComponentId, PropsInstance> = {};
+  const dataFile = path.join(process.cwd(), ".storystrap/data.json");
+  if (fs.existsSync(dataFile)) {
+    data = JSON.parse(fs.readFileSync(dataFile, { encoding: "utf-8" }));
+  }
 
   app.use(cors());
   app.use(express.json());
@@ -29,6 +31,8 @@ export function startServer() {
     const { componentId, propsInstance } = req.body ?? {};
     if (!componentId) {
       console.error("componentId missing, discarding data", req.body);
+      res.statusCode = 400;
+      res.send("error, no componentId");
       return;
     }
     if (!propsInstance || typeof propsInstance !== "object") {
@@ -36,6 +40,8 @@ export function startServer() {
         "propsInstance missing or non-object, discarding data",
         req.body
       );
+      res.statusCode = 400;
+      res.send("error, bad propsInstance");
       return;
     }
 
@@ -52,13 +58,16 @@ export function startServer() {
     res.send("ok");
   });
 
-  app.post("/export-data", () => {
+  app.post("/export-data", (_, res) => {
     const stringified = JSON.stringify(data, null, 2);
-    fs.writeFile("data.json", stringified, (err) => {
+    fs.writeFile(dataFile, stringified, (err) => {
       if (err) {
         console.error("Failed to export data", err);
+        res.statusCode = 500;
+        res.send("failed to export");
       } else {
         console.log("Export successful");
+        res.send("ok");
       }
     });
   });

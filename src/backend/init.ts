@@ -18,7 +18,7 @@ const handleError = (e: Error, message: string) => {
   process.exit(1);
 };
 
-async function writeComponentMap(componentFiles: string, babelConfig: string) {
+async function getComponentMap(componentFiles: string, babelConfig: string) {
   const reactDocsData: Record<string, Result[]> = {};
   const files = await globby(componentFiles);
 
@@ -51,45 +51,30 @@ async function writeComponentMap(componentFiles: string, babelConfig: string) {
     }
   }
 
-  const stringified = JSON.stringify(reactDocsData, null, 2);
-  try {
-    await writeFile(
-      ".storystrap/component-map.js",
-      `export default ${stringified}`
-    );
-    return reactDocsData;
-  } catch (error) {
-    handleError(error, "\n\nFailed to write component-map.js file");
-  }
-}
-
-function getRelative(file: string) {
-  return path.relative(path.join(process.cwd(), ".storystrap"), file);
+  return reactDocsData;
 }
 
 async function writeRegisterComponents(componentMap: Record<string, Result[]>) {
-  const registerComponents = `import componentMap from './component-map';
-${Object.keys(componentMap)
-  .map(
-    (file, i) =>
-      `import DefaultExport${i}, * as NamedExports${i} from '${getRelative(
-        file
-      )}';`
-  )
-  .join("\n")}
+  function getRelative(file: string) {
+    return path.relative(path.join(process.cwd(), ".storystrap"), file);
+  }
+
+  const registerComponents = `${Object.keys(componentMap)
+    .map(
+      (file, i) =>
+        `import DefaultExport${i}, * as NamedExports${i} from '${getRelative(
+          file
+        )}';`
+    )
+    .join("\n")}
 
 function registerExports(defaultExport, namedExports, file) {
-  const displayNames = componentMap[file].map(({ displayName }) => displayName);
   try {
-    if (displayNames.includes(defaultExport.displayName)) {
-      defaultExport.__filename = file;
-      defaultExport.__exportName = 'default';
-    }
+    defaultExport.__fileName = file;
+    defaultExport.__exportName = 'default';
     Object.keys(namedExports).forEach((key) => {
-      if (displayNames.includes(namedExports[key].displayName)) {
-        namedExports[key].__filename = file;
-        namedExports[key].__exportName = key;
-      }
+      namedExports[key].__fileName = file;
+      namedExports[key].__exportName = key;
     });
   } catch (e) {
     console.warn('Failed to modify React component for tracking purposes');
@@ -126,6 +111,6 @@ export async function init(
     ".storystrap/config.js",
     "module.exports = " + JSON.stringify({ port: 1234 }, null, 2)
   );
-  const componentMap = await writeComponentMap(componentFiles, babelConfig);
+  const componentMap = await getComponentMap(componentFiles, babelConfig);
   await writeRegisterComponents(componentMap!);
 }
