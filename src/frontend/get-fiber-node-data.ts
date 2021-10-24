@@ -63,6 +63,12 @@ export const getComponentFromId = (id: string) => {
   };
 };
 
+export const getIdFromComponent = (
+  fileName: string,
+  exportName: string,
+  componentName: string
+) => `${fileName}:${exportName}:${componentName}`;
+
 // Provided by backend/init.ts
 const getFileName = (node: Fiber): string => {
   const component = node?.elementType ?? node?.type;
@@ -76,9 +82,11 @@ const getExportName = (node: Fiber): string => {
 };
 
 export const getFiberNodeData = (node: Fiber): FiberNodeData => ({
-  componentId: `${getFileName(node)}:${getExportName(node)}:${getFiberNodeName(
-    node
-  )}`,
+  componentId: getIdFromComponent(
+    getFileName(node),
+    getExportName(node),
+    getFiberNodeName(node)
+  ),
   propsInstance: getFiberPropsInstance(node),
   isDOM: typeof node?.elementType === "string",
 });
