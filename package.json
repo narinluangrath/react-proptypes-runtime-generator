@@ -3,9 +3,9 @@
   "version": "0.2.20",
   "private": false,
   "description": "Generate proptypes using data at runtime",
-  "main": "dist/frontend/cjs/index.js",
-  "module": "dist/frontend/esm/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/frontend/cjs/frontend/index.js",
+  "module": "dist/frontend/esm/frontend/index.js",
+  "types": "dist/frontend/esm/frontend/index.d.ts",
   "bin": {
     "react-storystrap": "bin/react-storystrap.js"
   },
