@@ -9,7 +9,7 @@
 - [x] Chmod the cli
 - [x] Implement some dedup logic on server so only the props instance with most data is saved
 - [ ] Improve glob pattern to exclude node modules, dist, maybe use .gitignore?
-- [ ] Add save data command to frontend
+- [x] Add save data command to frontend
 - [ ] Add generate stories script
 
 # CLI

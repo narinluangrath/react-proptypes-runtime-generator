@@ -54,7 +54,7 @@ export function startServer() {
 
   app.post("/export-data", () => {
     const stringified = JSON.stringify(data, null, 2);
-    fs.appendFile("data.json", stringified, (err) => {
+    fs.writeFile("data.json", stringified, (err) => {
       if (err) {
         console.error("Failed to export data", err);
       } else {

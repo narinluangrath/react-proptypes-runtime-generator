@@ -54,6 +54,13 @@ export const PropTypesRuntimeGenerator: React.FC = ({ children }) => {
         .filter(Boolean);
       Promise.allSettled(sendNodeData);
     };
+
+    // @ts-expect-error
+    window.exportData = () => {
+      fetch("http://localhost:1234/export-data", {
+        method: "POST",
+      });
+    };
   }, [selfNode]);
 
   return <>{children}</>;
